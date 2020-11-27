@@ -8,23 +8,35 @@ import 'package:newslash/enumUtil.dart' as EnumUtil;
 import 'package:newslash/widgetTest/listAndGridDemo.dart';
 import 'package:newslash/widgetTest/list_demo.dart';
 
-//3.ListView 1
+import 'autoreject/auto_reject_app.dart';
+import 'autoreject/isolate_demo_app.dart';
+
+// TODO ;test 2020-11-27 10:40:47
+
 void main() {
-  runApp(ListViewTestApp());
+  runApp(MaterialApp(
+    // home: IsolateDemoSampleApp(),
+    home: AutoRejectApp(),
+  ));
 }
 
-class ListViewTestApp extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => GridViewTestAppState();
-}
+//3.ListView 1
+// void main() {
+//   runApp(ListViewTestApp());
+// }
 
-class ListViewTestAppState extends State<StatefulWidget> {
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return ListDemoWidget();
-  }
-}
+// class ListViewTestApp extends StatefulWidget {
+//   @override
+//   State<StatefulWidget> createState() => GridViewTestAppState();
+// }
+
+// class ListViewTestAppState extends State<StatefulWidget> {
+//   @override
+//   Widget build(BuildContext context) {
+//     // TODO: implement build
+//     return ListDemoWidget();
+//   }
+// }
 
 //2、GridView 1
 // void main() {
