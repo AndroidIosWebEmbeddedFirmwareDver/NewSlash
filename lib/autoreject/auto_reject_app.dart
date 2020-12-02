@@ -8,6 +8,8 @@ import 'package:newslash/enumUtil.dart' as EnumUtil;
 import 'package:newslash/widgetTest/listAndGridDemo.dart';
 import 'package:newslash/widgetTest/list_demo.dart';
 
+import 'copy_able_text_view.dart';
+
 class AutoRejectApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -37,7 +39,8 @@ class AutoRejectAppStateWidget extends State<AutoRejectAppWighet> {
   Widget getRow(int i) {
     return Padding(
         padding: EdgeInsets.all(10.0),
-        child: Text("$i、${widgets[i]["title"]}"));
+        // child: CopyableText("$i、${widgets[i]["title"]}"));
+        child: Text(DateTime.now().toString() + ":    ${widgets[i]["title"]}"));
   }
 
   getBody() {
@@ -141,7 +144,6 @@ class AutoRejectAppStateWidget extends State<AutoRejectAppWighet> {
         setState(() {
           rejectItemsNow = 2;
         });
-
         //写日志
         var nowLog =
             '</br></br></br>开始处理-------------------------------------</br></br></br></br>';
@@ -153,6 +155,11 @@ class AutoRejectAppStateWidget extends State<AutoRejectAppWighet> {
           // _deliveryInWaybill(searchWaybillByWaybillRecord);
           _loadData(searchWaybillByWaybillRecord);
         }
+      } else {
+        setState(() {
+          rejectItemsNow = 2;
+        });
+        _setLogsData('暂无可提货出库运单！');
       }
     });
   }
