@@ -2,13 +2,8 @@ import 'dart:convert';
 import 'dart:isolate';
 
 import 'package:flutter/material.dart';
-import 'package:newslash/httpUtil.dart';
-import 'package:newslash/snackBarUtil.dart';
-import 'package:newslash/enumUtil.dart' as EnumUtil;
-import 'package:newslash/widgetTest/listAndGridDemo.dart';
-import 'package:newslash/widgetTest/list_demo.dart';
-
-import 'copy_able_text_view.dart';
+import 'package:newslash/utils/httpUtil.dart';
+import 'package:newslash/utils/enumUtil.dart' as EnumUtil;
 
 class AutoRejectApp extends StatelessWidget {
   @override

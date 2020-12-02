@@ -1,4 +1,4 @@
-import 'package:newslash/enumUtil.dart' as EnumUtil;
+import 'package:newslash/utils/enumUtil.dart' as EnumUtil;
 
 ///
 ///////

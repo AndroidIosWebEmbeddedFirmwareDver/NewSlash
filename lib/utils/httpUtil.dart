@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:newslash/enumUtil.dart' as EnumUtil;
-import 'package:newslash/httpApi.dart';
+import 'package:newslash/utils/enumUtil.dart' as EnumUtil;
+import 'package:newslash/utils/httpApi.dart';
 
 ///
 class HttpUtil {
