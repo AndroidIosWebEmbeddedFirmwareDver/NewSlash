@@ -1,72 +1,112 @@
 import 'package:flutter/material.dart';
 
+import '../../utils/snackBarUtil.dart';
+
 class SlashMainWidgets extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => SlashMainWidgetsState();
 }
-// enum IconButtonStyle{onPressed:'onPressed'}
 
+
+enum MIconButtonType{main,msg,users}
+enum MIconButtonStyle{showIcons,onPressedColor,normalColor,isOnpressed,showText,showTextColor}
 class SlashMainWidgetsState extends State<SlashMainWidgets> {
   var mainIconButton = {
-    'onPressed': false,
-    'colorNromal': Colors.white,
-    'colorOnpressed': Colors.blue
+    MIconButtonType.main:
+    {
+      MIconButtonStyle.showIcons: Icons.home,
+      MIconButtonStyle.isOnpressed: false,
+      MIconButtonStyle.onPressedColor: Colors.blue,
+      MIconButtonStyle.normalColor: Colors.white,
+      MIconButtonStyle.showText:'tttt',
+      MIconButtonStyle.showTextColor:Colors.white,
+    },
+    MIconButtonType.msg:
+    {
+      MIconButtonStyle.showIcons: Icons.message,
+      MIconButtonStyle.isOnpressed: false,
+      MIconButtonStyle.onPressedColor: Colors.blue,
+      MIconButtonStyle.normalColor: Colors.white,
+      MIconButtonStyle.showText:'tttt',
+      MIconButtonStyle.showTextColor:Colors.white,
+    },
+    MIconButtonType.users:
+    {
+      MIconButtonStyle.showIcons: Icons.verified_user,
+      MIconButtonStyle.isOnpressed: false,
+      MIconButtonStyle.onPressedColor: Colors.blue,
+      MIconButtonStyle.normalColor: Colors.white,
+      MIconButtonStyle.showText:'tttt',
+      MIconButtonStyle.showTextColor:Colors.white,
+    }
   };
 
   //
-  uiBuildHeader() {
+  uiBuildHeader(BuildContext context) {
     return Container(
         child: Row(
       children: [
-        Expanded(
-          child: Container(
-            child: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                    icon: Icon(
-                      Icons.ac_unit,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {},
-                  ),
-                ],
-              ),
-            ),
-            color: Colors.orange,
-          ),
-          flex: 1,
-        ),
-        Expanded(
-          child: Container(
-            child: Center(
-              child: Text('B'),
-            ),
-            color: Colors.blue,
-          ),
-          flex: 1,
-        ),
-        Expanded(
-          child: Container(
-            child: Center(
-              child: Text('C'),
-            ),
-            color: Colors.green,
-          ),
-          flex: 1,
-        ),
-      ],
-    ));
+        uiBuildHeaderIconButton(MIconButtonType.main,context),
+        uiBuildHeaderIconButton(MIconButtonType.msg,context),
+        uiBuildHeaderIconButton(MIconButtonType.users,context),
+      ],)
+    );
   }
 
+  uiBuildHeaderIconButton(MIconButtonType mIconButtonType,BuildContext context){
+    return Expanded(
+      child: Container(
+        child: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              IconButton(
+                icon: Icon(
+                  mainIconButton[mIconButtonType][MIconButtonStyle.showIcons],
+                  color: mainIconButton[mIconButtonType][MIconButtonStyle.isOnpressed]?mainIconButton[mIconButtonType][MIconButtonStyle.onPressedColor]:mainIconButton[mIconButtonType][MIconButtonStyle.normalColor],
+                ),
+                onPressed: () {
+                  setState(() {
+                    mainIconButton[mIconButtonType][MIconButtonStyle.isOnpressed]=!mainIconButton[mIconButtonType][MIconButtonStyle.isOnpressed];
+                  });
+                  Future.delayed(Duration(milliseconds: 300)).then((value){
+                  setState(() {
+                            mainIconButton[mIconButtonType][MIconButtonStyle.isOnpressed]=!mainIconButton[mIconButtonType][MIconButtonStyle.isOnpressed];
+                    });
+                  });
+                  onHeaderIconButtonPressed(mIconButtonType,context);
+                },
+              ),
+            ],
+          ),
+        ),
+        color: Colors.orange,
+      ),
+      flex: 1,
+    );
+  }
+
+  onHeaderIconButtonPressed(MIconButtonType mIconButtonType,BuildContext context){
+    switch (mIconButtonType) {
+      case MIconButtonType.main:
+          // SnackBarUtil.showSimpleSnackBar(context, 'showText', 1000);
+        break;
+          case MIconButtonType.msg:
+        
+        break;
+          case MIconButtonType.users:
+        
+        break;
+      default:
+    }
+  }
   //
-  uiBuildBody() {
+  uiBuildBody(BuildContext context) {
     return Container();
   }
 
   // 构建UI，采用Row
-  uiBuild() {
+  uiBuild(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -78,7 +118,7 @@ class SlashMainWidgetsState extends State<SlashMainWidgets> {
             flex: 150),
         Expanded(
             child: Container(
-              child: uiBuildHeader(),
+              child: uiBuildHeader(context),
               color: Colors.blue,
             ),
             flex: 10),
@@ -90,7 +130,7 @@ class SlashMainWidgetsState extends State<SlashMainWidgets> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      body: uiBuild(),
+      body: uiBuild(context),
     );
   }
 }
