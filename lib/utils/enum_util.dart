@@ -6,8 +6,9 @@ enum SlashSource { Unslash, Pixabay, Pexels }
 enum QueryNetworkType { Http, Https, Socket, Socket5 }
 
 // 主页按钮
-enum MIconButtonType { main, msg, user }
+enum MIconButtonType { main, msg, user, download }
 enum MIconButtonStyle {
+  key,
   showIcons,
   onPressedColor,
   normalColor,
