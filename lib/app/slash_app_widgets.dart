@@ -27,16 +27,12 @@ class SlashMainWidgetsState extends State<SlashMainWidgets> {
       children: [
         Expanded(
             child: Container(
-              // child: Text('1'),
               child: SlashMainBodyWidgets(),
-              color: Colors.white,
             ),
-            flex: 150),
+            flex: 163),
         Expanded(
             child: Container(
-              // child: uiBuildHeader(context),
               child: SlashAppBottomWidgets(),
-              color: Colors.blue,
             ),
             flex: 10),
       ],
