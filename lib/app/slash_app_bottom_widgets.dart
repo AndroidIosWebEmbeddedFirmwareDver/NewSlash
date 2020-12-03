@@ -1,21 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:newslash/utils/event_bus_util.dart';
+import 'package:newslash/utils/enum_util.dart';
 
-enum MIconButtonType { main, msg, users }
-enum MIconButtonStyle {
-  showIcons,
-  onPressedColor,
-  normalColor,
-  isOnpressed,
-  showText,
-  showTextColor
-}
-
-class SlashMainBottomWidgets extends StatefulWidget {
+class SlashAppBottomWidgets extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => SlashMainBottomWidgetsState();
+  State<StatefulWidget> createState() => SlashAppBottomWidgetsState();
 }
 
-class SlashMainBottomWidgetsState extends State<SlashMainBottomWidgets> {
+class SlashAppBottomWidgetsState extends State<SlashAppBottomWidgets> {
   var mainIconButton = {
     MIconButtonType.main: {
       MIconButtonStyle.showIcons: Icons.home,
@@ -33,7 +25,7 @@ class SlashMainBottomWidgetsState extends State<SlashMainBottomWidgets> {
       MIconButtonStyle.showText: 'tttt',
       MIconButtonStyle.showTextColor: Colors.white,
     },
-    MIconButtonType.users: {
+    MIconButtonType.user: {
       MIconButtonStyle.showIcons: Icons.verified_user,
       MIconButtonStyle.isOnpressed: false,
       MIconButtonStyle.onPressedColor: Colors.blue,
@@ -49,7 +41,7 @@ class SlashMainBottomWidgetsState extends State<SlashMainBottomWidgets> {
       children: [
         uiBuildHeaderIconButton(MIconButtonType.main, context),
         uiBuildHeaderIconButton(MIconButtonType.msg, context),
-        uiBuildHeaderIconButton(MIconButtonType.users, context),
+        uiBuildHeaderIconButton(MIconButtonType.user, context),
       ],
     ));
   }
@@ -99,18 +91,10 @@ class SlashMainBottomWidgetsState extends State<SlashMainBottomWidgets> {
     );
   }
 
+  // 点击发送Event到body容器，实现内容切换效果
   onHeaderIconButtonPressed(
       MIconButtonType mIconButtonType, BuildContext context) {
-    switch (mIconButtonType) {
-      case MIconButtonType.main:
-        // SnackBarUtil.showSimpleSnackBar(context, 'showText', 1000);
-        break;
-      case MIconButtonType.msg:
-        break;
-      case MIconButtonType.users:
-        break;
-      default:
-    }
+    EventBusUtil.init().fire(mIconButtonType);
   }
 
   @override

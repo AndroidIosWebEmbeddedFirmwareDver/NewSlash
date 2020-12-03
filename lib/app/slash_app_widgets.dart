@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:newslash/pages/main/slash_main_bottom_widgets.dart';
+import 'package:newslash/app/slash_app_bottom_widgets.dart';
+import 'package:newslash/app/slash_main_body_widgets.dart';
+import 'package:newslash/utils/event_bus_util.dart';
 
 class SlashMainWidgets extends StatefulWidget {
   @override
@@ -7,6 +9,12 @@ class SlashMainWidgets extends StatefulWidget {
 }
 
 class SlashMainWidgetsState extends State<SlashMainWidgets> {
+  aEventBusDemo() {
+    EventBusUtil.init().on().listen((event) {
+      print('aEventBusDemo:$event');
+    });
+  }
+
   //
   uiBuildBody(BuildContext context) {
     return Container();
@@ -19,14 +27,15 @@ class SlashMainWidgetsState extends State<SlashMainWidgets> {
       children: [
         Expanded(
             child: Container(
-              child: Text('1'),
-              color: Colors.red,
+              // child: Text('1'),
+              child: SlashMainBodyWidgets(),
+              color: Colors.white,
             ),
             flex: 150),
         Expanded(
             child: Container(
               // child: uiBuildHeader(context),
-              child: SlashMainBottomWidgets(),
+              child: SlashAppBottomWidgets(),
               color: Colors.blue,
             ),
             flex: 10),
@@ -40,5 +49,12 @@ class SlashMainWidgetsState extends State<SlashMainWidgets> {
     return Scaffold(
       body: uiBuild(context),
     );
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    aEventBusDemo();
   }
 }

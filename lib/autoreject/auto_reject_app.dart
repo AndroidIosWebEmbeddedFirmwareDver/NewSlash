@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'dart:isolate';
 
 import 'package:flutter/material.dart';
-import 'package:newslash/utils/httpUtil.dart';
-import 'package:newslash/utils/enumUtil.dart' as EnumUtil;
+import 'package:newslash/utils/http_util.dart';
+import 'package:newslash/utils/enum_util.dart' as EnumUtil;
 
 class AutoRejectApp extends StatelessWidget {
   @override

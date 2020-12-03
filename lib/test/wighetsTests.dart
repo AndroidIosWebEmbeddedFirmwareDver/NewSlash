@@ -2,9 +2,9 @@ import 'dart:ffi';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:newslash/utils/httpUtil.dart';
-import 'package:newslash/utils/snackBarUtil.dart';
-import 'package:newslash/utils/enumUtil.dart' as EnumUtil;
+import 'package:newslash/utils/http_util.dart';
+import 'package:newslash/utils/snack_bar_util.dart';
+import 'package:newslash/utils/enum_util.dart' as EnumUtil;
 
 //7.网络
 void main() {
