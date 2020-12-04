@@ -75,7 +75,7 @@ class HttpUtil {
     } else if (mQueryNetworkType == EnumUtil.QueryNetworkType.Https) {
       mUri = new Uri.https(authority, unencodePath, queryParams);
     }
-    print("mUri:$mUri");
+    // print("mUri:$mUri");
     HttpClientRequest request;
     if (mQueryMethodType == EnumUtil.QueryMethodType.Get) {
       request = await mHttpClient.getUrl(mUri);
@@ -87,7 +87,7 @@ class HttpUtil {
     if (headers != null) {
       headers.forEach((element) {
         element.forEach((key, value) {
-          print('key:$key,value:$value');
+          // print('key:$key,value:$value');
           request.headers.add(key, value);
         });
       });

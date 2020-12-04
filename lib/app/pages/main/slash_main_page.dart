@@ -4,9 +4,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:newslash/app/models/pexels_photos_model.dart';
 import 'package:newslash/app/models/pexels_photos_show_model.dart';
+import 'package:newslash/utils/app_system_params.dart';
 import 'package:newslash/utils/enum_util.dart';
 import 'package:newslash/utils/event_bus_util.dart';
 import 'package:newslash/utils/http_util.dart';
+import 'package:newslash/utils/snack_bar_util.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SlashMainPageWidgets extends StatefulWidget {
@@ -30,30 +32,32 @@ class SlashMainPageWidgetsState extends State<SlashMainPageWidgets> {
     return Padding(
       padding: EdgeInsets.all(10.0),
       child: Container(
-        color: Colors.tealAccent,
+        // color: Color(0x88000000),
         child: new Stack(
           children: [
             Align(
-              child: Container(
-                child: listViewBuildRowCard(
-                    mPexelsPhotosModel.photosShow[dataIndex]
-                        .mPexelsPhotosPhotoModel.src.large,
-                    context),
-                constraints: BoxConstraints.expand(
-                  width: MediaQuery.of(context).size.width, //w填充屏幕
-                  height: MediaQuery.of(context).size.height * 3 / 5, //h填满屏幕1/2
-                ),
-              ),
+              child: listViewBuildRowCard(
+                  mPexelsPhotosModel
+                      .photosShow[dataIndex].mPexelsPhotosPhotoModel.src.large,
+                  context),
               alignment: AlignmentDirectional.topStart,
             ),
             Align(
-              child: Container(
-                // color: Colors.red,
-                color: Color(0x88000000),
-                child: uiBuildRowIconButton(
-                    dataIndex, MIconButtonType.download, context),
-              ),
+              // child: uiBuildRowIconButton(dataIndex,MIconButtonType.download,context),
+              child: uiBuildRowIconTapWidget(
+                  dataIndex, MIconButtonType.download, context),
               alignment: AlignmentDirectional.topEnd,
+            ),
+          ],
+        ),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(0)),
+          boxShadow: [
+            BoxShadow(
+              color: Color(0x88000000), //底色,阴影颜色
+              offset: Offset(0, 4), //阴影位置,从什么位置开始
+              blurRadius: 4, // 阴影模糊层度
+              spreadRadius: 0, //阴影模糊大小
             ),
           ],
         ),
@@ -61,48 +65,124 @@ class SlashMainPageWidgetsState extends State<SlashMainPageWidgets> {
     );
   }
 
+  uiBuildRowIconTapWidget(
+      dataIndex, MIconButtonType mIconButtonType, BuildContext context) {
+    return Container(
+      constraints: BoxConstraints.expand(
+        // width: MediaQuery.of(context).size.width * 1 / 5, //w填充屏幕
+        height: MediaQuery.of(context).size.height * 3 / 5, //h填满屏幕1/2
+      ),
+      child: Column(
+        children: [
+          Expanded(
+            child: Container(
+              color: Colors.transparent,
+            ),
+            flex: 12,
+          ),
+          Expanded(
+            child: uiBuildRowIconTapContentWidget(dataIndex, context),
+            flex: 1,
+          ),
+        ],
+      ),
+    );
+  }
+
+  uiBuildRowIconTapContentWidget(dataIndex, BuildContext context) {
+    var photosShow = mPexelsPhotosModel.photosShow[dataIndex];
+    return Container(
+      color: Color(0x88000000),
+      child: Row(
+        // mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Container(
+              child: Text(
+                AppSystemParams.init()
+                        .getParams(AppSystemParamsKeys.slashSourceSite) +
+                    '(' +
+                    (photosShow != null
+                        ? photosShow.mPexelsPhotosPhotoModel.photographer
+                        : '') +
+                    '),License by coo.',
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+            flex: 7,
+          ),
+          Expanded(
+            child: uiBuildRowIconButton(
+                dataIndex, MIconButtonType.favorite, context),
+            flex: 1,
+          ),
+          Expanded(
+            child: uiBuildRowIconButton(
+                dataIndex, MIconButtonType.download, context),
+            flex: 1,
+          ),
+        ],
+      ),
+    );
+  }
+
   uiBuildRowIconButton(
       dataIndex, MIconButtonType mIconButtonType, BuildContext context) {
-    var rowIconButton = mPexelsPhotosModel.photosShow[dataIndex].rowIconButton;
-    return IconButton(
-      icon: Icon(
-        rowIconButton[mIconButtonType][MIconButtonStyle.showIcons],
-        color: rowIconButton[mIconButtonType][MIconButtonStyle.isOnpressed]
-            ? rowIconButton[mIconButtonType][MIconButtonStyle.onPressedColor]
-            : rowIconButton[mIconButtonType][MIconButtonStyle.normalColor],
+    return Container(
+      color: mPexelsPhotosModel.photosShow[dataIndex]
+          .rowIconButton[mIconButtonType][MIconButtonStyle.bgColor],
+      child: IconButton(
+        icon: Icon(
+          mPexelsPhotosModel.photosShow[dataIndex]
+              .rowIconButton[mIconButtonType][MIconButtonStyle.showIcons],
+          color: mPexelsPhotosModel.photosShow[dataIndex]
+                  .rowIconButton[mIconButtonType][MIconButtonStyle.isOnpressed]
+              ? mPexelsPhotosModel
+                      .photosShow[dataIndex].rowIconButton[mIconButtonType]
+                  [MIconButtonStyle.onPressedColor]
+              : mPexelsPhotosModel.photosShow[dataIndex]
+                  .rowIconButton[mIconButtonType][MIconButtonStyle.normalColor],
+        ),
+        onPressed: () {
+          onRowIconButtonPressed(dataIndex, mIconButtonType, context);
+        },
       ),
-      onPressed: () {
-        setState(() {
-          rowIconButton[mIconButtonType][MIconButtonStyle.isOnpressed] =
-              !rowIconButton[mIconButtonType][MIconButtonStyle.isOnpressed];
-        });
-        Future.delayed(Duration(milliseconds: 300)).then((value) {
-          setState(() {
-            rowIconButton[mIconButtonType][MIconButtonStyle.isOnpressed] =
-                !rowIconButton[mIconButtonType][MIconButtonStyle.isOnpressed];
-          });
-          print(dataIndex);
-        });
-        onRowIconButtonPressed(dataIndex, mIconButtonType, context);
-      },
     );
   }
 
   // 点击发送Event到body容器，实现内容切换效果
   onRowIconButtonPressed(
-      int dataIndex, MIconButtonType mIconButtonType, BuildContext context) {
+      dataIndex, MIconButtonType mIconButtonType, BuildContext context) {
     // EventBusUtil.init().fire(mIconButtonType);
-
-    var mPhotosSrc =
-        mPexelsPhotosModel.photosShow[dataIndex].mPexelsPhotosPhotoModel.src;
-    showDialog(
+    setState(() {
+      mPexelsPhotosModel.photosShow[dataIndex].rowIconButton[mIconButtonType]
+          [MIconButtonStyle.isOnpressed] = !mPexelsPhotosModel
+              .photosShow[dataIndex].rowIconButton[mIconButtonType]
+          [MIconButtonStyle.isOnpressed];
+    });
+    Future.delayed(Duration(milliseconds: 300)).then((value) {
+      setState(() {
+        mPexelsPhotosModel.photosShow[dataIndex].rowIconButton[mIconButtonType]
+            [MIconButtonStyle.isOnpressed] = !mPexelsPhotosModel
+                .photosShow[dataIndex].rowIconButton[mIconButtonType]
+            [MIconButtonStyle.isOnpressed];
+      });
+      print(dataIndex);
+    });
+    if (mIconButtonType == MIconButtonType.download) {
+      showDialog(
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text('Notice'),
-            content:
-                Text('Are you sure to dowanload? \n' + mPhotosSrc.original),
+            content: Text('Are you sure to dowanload? \n' +
+                mPexelsPhotosModel.photosShow[dataIndex].mPexelsPhotosPhotoModel
+                    .src.original),
             actions: <Widget>[
               FlatButton(
                 onPressed: () {
@@ -113,14 +193,18 @@ class SlashMainPageWidgetsState extends State<SlashMainPageWidgets> {
               ),
               FlatButton(
                 onPressed: () {
-                  _launchUrl(mPhotosSrc.original);
+                  Navigator.of(context).pop();
+                  _launchUrl(mPexelsPhotosModel.photosShow[dataIndex]
+                      .mPexelsPhotosPhotoModel.src.original);
                 },
                 textColor: Colors.red,
                 child: Text('sure'),
               ),
             ],
           );
-        });
+        },
+      );
+    }
   }
 
   _launchUrl(String url) async {
@@ -139,9 +223,8 @@ class SlashMainPageWidgetsState extends State<SlashMainPageWidgets> {
         repeat: ImageRepeat.noRepeat,
       ),
       constraints: BoxConstraints.expand(
-        //对Image的约束
         width: MediaQuery.of(context).size.width, //w填充屏幕
-        height: MediaQuery.of(context).size.height * 3 / 4, //h填满屏幕1/2
+        height: MediaQuery.of(context).size.height * 3 / 5, //h填满屏幕1/2
       ),
     );
   }
@@ -171,9 +254,8 @@ class SlashMainPageWidgetsState extends State<SlashMainPageWidgets> {
     // TODO: implement initState
     super.initState();
     HttpUtil.init().httpSearchImage(SlashSource.Pexels,
-        {'page': '1', 'per_page': '100', 'query': 'girl'}).then((value) {
+        {'page': '1', 'per_page': '100', 'query': 'river'}).then((value) {
       mPexelsPhotosModel = PexelsPhotosModel.fromJson(jsonDecode(value));
-      print(mPexelsPhotosModel);
       setState(() {
         _randomImagesSets = value;
       });
