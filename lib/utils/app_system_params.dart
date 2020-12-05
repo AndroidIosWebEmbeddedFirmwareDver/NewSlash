@@ -9,7 +9,7 @@ class AppSystemParams {
     AppSystemParamsKeys.author: null,
   };
 
-  static AppSystemParams instance;
+  static AppSystemParams instance = AppSystemParams();
 
   static AppSystemParams init() {
     if (instance == null) instance = AppSystemParams();

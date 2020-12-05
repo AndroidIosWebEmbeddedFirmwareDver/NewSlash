@@ -47,7 +47,7 @@ class EventBus {
   /// unpaused or canceled. So it's usually better to just cancel and later
   /// subscribe again (avoids memory leak).
   ///
-  Stream<T> on<T>() {
+  Stream<dynamic>? on<T>() {
     if (T == dynamic) {
       return streamController.stream;
     } else {

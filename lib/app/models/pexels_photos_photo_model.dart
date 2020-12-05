@@ -1,16 +1,26 @@
 import 'package:newslash/app/models/pexels_photos_photo_src_model.dart';
 
 class PexelsPhotosPhotoModel {
-  int id;
-  int width;
-  int height;
-  String url;
-  String photographer;
-  String photographer_url;
-  int photographer_id;
-  PexelsPhotosPhotoSrcModel src;
-  bool liked;
+  late int id;
+  late int width;
+  late int height;
+  late String url;
+  late String photographer;
+  late String photographer_url;
+  late int photographer_id;
+  late PexelsPhotosPhotoSrcModel src;
+  late bool liked;
 
+  PexelsPhotosPhotoModel(
+      this.id,
+      this.width,
+      this.height,
+      this.url,
+      this.photographer,
+      this.photographer_url,
+      this.photographer_id,
+      this.liked,
+      this.src);
   PexelsPhotosPhotoModel.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
     this.id = json['id'];

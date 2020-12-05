@@ -12,13 +12,13 @@ class CopyableText extends StatelessWidget {
   final int maxLines;
   CopyableText(
     this.data, {
-    this.style,
-    this.textAlign,
-    this.textDirection,
-    this.softWrap,
-    this.overflow,
-    this.textScaleFactor,
-    this.maxLines,
+    required this.style,
+    required this.textAlign,
+    required this.textDirection,
+    required this.softWrap,
+    required this.overflow,
+    required this.textScaleFactor,
+    required this.maxLines,
   });
   @override
   Widget build(BuildContext context) {

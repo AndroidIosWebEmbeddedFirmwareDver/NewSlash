@@ -127,7 +127,7 @@ class AutoRejectAppStateWidget extends State<AutoRejectAppWighet> {
             queryParams)
         .then((value) {
       //先将json字符串转json
-      Map searchWaybillByWaybillResponJSonObj = jsonDecode(value);
+      Map searchWaybillByWaybillResponJSonObj = jsonDecode(value!);
       //再将json转model
       // final model = UserInfo.fromJson(json);
       var searchWaybillByWaybillRecords =
@@ -159,7 +159,7 @@ class AutoRejectAppStateWidget extends State<AutoRejectAppWighet> {
     });
   }
 
-  static Future<String> _deliveryInWaybill(recordObj) async {
+  static Future<String?> _deliveryInWaybill(recordObj) async {
     if (recordObj != null) {
       var queryParams = [];
       if (recordObj['smInventorySummaryList'] != null) {
@@ -231,7 +231,7 @@ class AutoRejectAppStateWidget extends State<AutoRejectAppWighet> {
       var recordObj = msg[0];
       SendPort replyTo = msg[1];
       _deliveryInWaybill(recordObj).then((value) {
-        var nowLog = '运单' + recordObj['waybillCode'] + '提货出库:回执内容->' + value;
+        var nowLog = '运单' + recordObj['waybillCode'] + '提货出库:回执内容->' + value!;
         // 其对应的“ReceivePort”发送解析出来的JSON数据③
         replyTo.send(nowLog);
       });

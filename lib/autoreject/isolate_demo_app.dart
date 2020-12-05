@@ -12,13 +12,15 @@ class IsolateDemoSampleApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: SampleAppPage(),
+      home: SampleAppPage(
+        key: new Key('value'),
+      ),
     );
   }
 }
 
 class SampleAppPage extends StatefulWidget {
-  SampleAppPage({Key key}) : super(key: key);
+  SampleAppPage({required Key key}) : super(key: key);
 
   @override
   _SampleAppPageState createState() => _SampleAppPageState();

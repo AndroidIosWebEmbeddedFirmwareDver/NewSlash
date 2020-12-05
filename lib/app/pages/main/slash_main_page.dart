@@ -17,11 +17,11 @@ class SlashMainPageWidgets extends StatefulWidget {
 }
 
 class SlashMainPageWidgetsState extends State<SlashMainPageWidgets> {
-  PexelsPhotosModel mPexelsPhotosModel;
+  late PexelsPhotosModel? mPexelsPhotosModel;
   var _randomImagesSets = '';
 
   ListView getListView() => ListView.builder(
-      itemCount: mPexelsPhotosModel.photosShow.length,
+      itemCount: mPexelsPhotosModel!.photosShow.length,
       itemBuilder: (BuildContext context, int position) {
         return getRowFrameLayout(position, context);
       });
@@ -29,6 +29,7 @@ class SlashMainPageWidgetsState extends State<SlashMainPageWidgets> {
   //https://medium.com/flutter-community/flutter-for-android-developers-how-to-design-framelayout-in-flutter-93a19fc7e7a6
   //FrameLayout
   Widget getRowFrameLayout(int dataIndex, BuildContext context) {
+    var photosShow = mPexelsPhotosModel!.photosShow[dataIndex];
     return Padding(
       padding: EdgeInsets.all(10.0),
       child: Container(
@@ -37,9 +38,7 @@ class SlashMainPageWidgetsState extends State<SlashMainPageWidgets> {
           children: [
             Align(
               child: listViewBuildRowCard(
-                  mPexelsPhotosModel
-                      .photosShow[dataIndex].mPexelsPhotosPhotoModel.src.large,
-                  context),
+                  photosShow!.mPexelsPhotosPhotoModel.src.large, context),
               alignment: AlignmentDirectional.topStart,
             ),
             Align(
@@ -90,7 +89,7 @@ class SlashMainPageWidgetsState extends State<SlashMainPageWidgets> {
   }
 
   uiBuildRowIconTapContentWidget(dataIndex, BuildContext context) {
-    var photosShow = mPexelsPhotosModel.photosShow[dataIndex];
+    var photosShow = mPexelsPhotosModel!.photosShow[dataIndex];
     return Container(
       color: Color(0x88000000),
       child: Row(
@@ -131,21 +130,16 @@ class SlashMainPageWidgetsState extends State<SlashMainPageWidgets> {
   }
 
   uiBuildRowIconButton(
-      dataIndex, MIconButtonType mIconButtonType, BuildContext context) {
+      int dataIndex, MIconButtonType mIconButtonType, BuildContext context) {
+    var photosShow = mPexelsPhotosModel!.photosShow[dataIndex]!;
     return Container(
-      color: mPexelsPhotosModel.photosShow[dataIndex]
-          .rowIconButton[mIconButtonType][MIconButtonStyle.bgColor],
+      color: photosShow.mButtons[mIconButtonType]!.bgColor,
       child: IconButton(
         icon: Icon(
-          mPexelsPhotosModel.photosShow[dataIndex]
-              .rowIconButton[mIconButtonType][MIconButtonStyle.showIcons],
-          color: mPexelsPhotosModel.photosShow[dataIndex]
-                  .rowIconButton[mIconButtonType][MIconButtonStyle.isOnpressed]
-              ? mPexelsPhotosModel
-                      .photosShow[dataIndex].rowIconButton[mIconButtonType]
-                  [MIconButtonStyle.onPressedColor]
-              : mPexelsPhotosModel.photosShow[dataIndex]
-                  .rowIconButton[mIconButtonType][MIconButtonStyle.normalColor],
+          photosShow.mButtons[mIconButtonType]!.showIcons,
+          color: photosShow.mButtons[mIconButtonType]!.isOnpressed
+              ? photosShow.mButtons[mIconButtonType]!.onPressedColor
+              : photosShow.mButtons[mIconButtonType]!.normalColor,
         ),
         onPressed: () {
           onRowIconButtonPressed(dataIndex, mIconButtonType, context);
@@ -159,17 +153,17 @@ class SlashMainPageWidgetsState extends State<SlashMainPageWidgets> {
       dataIndex, MIconButtonType mIconButtonType, BuildContext context) {
     // EventBusUtil.init().fire(mIconButtonType);
     setState(() {
-      mPexelsPhotosModel.photosShow[dataIndex].rowIconButton[mIconButtonType]
-          [MIconButtonStyle.isOnpressed] = !mPexelsPhotosModel
-              .photosShow[dataIndex].rowIconButton[mIconButtonType]
-          [MIconButtonStyle.isOnpressed];
+      // mPexelsPhotosModel.photosShow[dataIndex].rowIconButton[mIconButtonType]
+      //     [MIconButtonStyle.isOnpressed] = !mPexelsPhotosModel
+      //         .photosShow[dataIndex].rowIconButton[mIconButtonType]
+      //     [MIconButtonStyle.isOnpressed];
     });
     Future.delayed(Duration(milliseconds: 300)).then((value) {
       setState(() {
-        mPexelsPhotosModel.photosShow[dataIndex].rowIconButton[mIconButtonType]
-            [MIconButtonStyle.isOnpressed] = !mPexelsPhotosModel
-                .photosShow[dataIndex].rowIconButton[mIconButtonType]
-            [MIconButtonStyle.isOnpressed];
+        // mPexelsPhotosModel.photosShow[dataIndex].rowIconButton[mIconButtonType]
+        //     [MIconButtonStyle.isOnpressed] = !mPexelsPhotosModel
+        //         .photosShow[dataIndex].rowIconButton[mIconButtonType]
+        //     [MIconButtonStyle.isOnpressed];
       });
       print(dataIndex);
     });
@@ -181,20 +175,20 @@ class SlashMainPageWidgetsState extends State<SlashMainPageWidgets> {
           return AlertDialog(
             title: Text('Notice'),
             content: Text('Are you sure to dowanload? \n' +
-                mPexelsPhotosModel.photosShow[dataIndex].mPexelsPhotosPhotoModel
-                    .src.original),
+                mPexelsPhotosModel!.photosShow[dataIndex]!
+                    .mPexelsPhotosPhotoModel.src.original),
             actions: <Widget>[
               FlatButton(
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  Navigator.of(context)!.pop();
                   // NavigatorUtils.goBack(context);
                 },
                 child: Text('cancle'),
               ),
               FlatButton(
                 onPressed: () {
-                  Navigator.of(context).pop();
-                  _launchUrl(mPexelsPhotosModel.photosShow[dataIndex]
+                  Navigator.of(context)!.pop();
+                  _launchUrl(mPexelsPhotosModel!.photosShow[dataIndex]!
                       .mPexelsPhotosPhotoModel.src.original);
                 },
                 textColor: Colors.red,
@@ -255,7 +249,7 @@ class SlashMainPageWidgetsState extends State<SlashMainPageWidgets> {
     super.initState();
     HttpUtil.init().httpSearchImage(SlashSource.Pexels,
         {'page': '1', 'per_page': '100', 'query': 'river'}).then((value) {
-      mPexelsPhotosModel = PexelsPhotosModel.fromJson(jsonDecode(value));
+      mPexelsPhotosModel = PexelsPhotosModel.fromJson(jsonDecode(value!));
       setState(() {
         _randomImagesSets = value;
       });

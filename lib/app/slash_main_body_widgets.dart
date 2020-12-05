@@ -42,7 +42,7 @@ class SlashMainBodyWidgetsState extends State<SlashMainBodyWidgets> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    EventBusUtil.init().on().listen((event) {
+    EventBusUtil.init().on()?.listen((event) {
       setState(() {
         nowShowBody = event;
       });

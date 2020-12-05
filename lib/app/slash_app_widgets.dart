@@ -10,7 +10,7 @@ class SlashMainWidgets extends StatefulWidget {
 
 class SlashMainWidgetsState extends State<SlashMainWidgets> {
   aEventBusDemo() {
-    EventBusUtil.init().on().listen((event) {
+    EventBusUtil.init().on()?.listen((event) {
       print('aEventBusDemo:$event');
     });
   }
