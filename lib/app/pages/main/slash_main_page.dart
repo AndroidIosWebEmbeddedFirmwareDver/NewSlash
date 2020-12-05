@@ -17,7 +17,7 @@ class SlashMainPageWidgets extends StatefulWidget {
 }
 
 class SlashMainPageWidgetsState extends State<SlashMainPageWidgets> {
-  late PexelsPhotosModel? mPexelsPhotosModel;
+  PexelsPhotosModel? mPexelsPhotosModel;
   var _randomImagesSets = '';
 
   ListView getListView() => ListView.builder(
@@ -249,9 +249,11 @@ class SlashMainPageWidgetsState extends State<SlashMainPageWidgets> {
     super.initState();
     HttpUtil.init().httpSearchImage(SlashSource.Pexels,
         {'page': '1', 'per_page': '100', 'query': 'river'}).then((value) {
-      mPexelsPhotosModel = PexelsPhotosModel.fromJson(jsonDecode(value!));
+      // mPexelsPhotosModel = PexelsPhotosModel.fromJson(jsonDecode(value!));
       setState(() {
-        _randomImagesSets = value;
+        if (value != null) {
+          _randomImagesSets = value;
+        }
       });
     });
   }

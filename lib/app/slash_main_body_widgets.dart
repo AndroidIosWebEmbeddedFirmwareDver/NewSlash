@@ -18,13 +18,10 @@ class SlashMainBodyWidgetsState extends State<SlashMainBodyWidgets> {
     switch (nowShowBody) {
       case MIconButtonType.main:
         return SlashMainPageWidgets();
-        break;
       case MIconButtonType.msg:
         return SlashMsgPageWidgets();
-        break;
       case MIconButtonType.user:
         return SlashUserPageWidgets();
-        break;
       default:
         return Container(
           child: Text('Nothing...'),
