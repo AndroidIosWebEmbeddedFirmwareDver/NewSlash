@@ -130,8 +130,7 @@ class AutoRejectAppStateWidget extends State<AutoRejectAppWighet> {
       Map searchWaybillByWaybillResponJSonObj = jsonDecode(value!);
       //再将json转model
       // final model = UserInfo.fromJson(json);
-      var searchWaybillByWaybillRecords =
-          searchWaybillByWaybillResponJSonObj['data']['records'];
+      var searchWaybillByWaybillRecords = searchWaybillByWaybillResponJSonObj['data']['records'];
       // print(searchWaybillByWaybillRecords);
       // _setLogsData(searchWaybillByWaybillRecords.toString());
       // 处理
@@ -140,11 +139,9 @@ class AutoRejectAppStateWidget extends State<AutoRejectAppWighet> {
           rejectItemsNow = 2;
         });
         //写日志
-        var nowLog =
-            '</br></br></br>开始处理-------------------------------------</br></br></br></br>';
+        var nowLog = '</br></br></br>开始处理-------------------------------------</br></br></br></br>';
         _setLogsData(nowLog);
-        for (var searchWaybillByWaybillRecord
-            in searchWaybillByWaybillRecords) {
+        for (var searchWaybillByWaybillRecord in searchWaybillByWaybillRecords) {
           //写日志
           // _setLogsData(searchWaybillByWaybillRecord.toString());
           // _deliveryInWaybill(searchWaybillByWaybillRecord);

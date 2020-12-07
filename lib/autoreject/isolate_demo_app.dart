@@ -67,9 +67,7 @@ class _SampleAppPageState extends State<SampleAppPage> {
       });
 
   Widget getRow(int i) {
-    return Padding(
-        padding: EdgeInsets.all(10.0),
-        child: Text("Row ${widgets[i]["title"]}"));
+    return Padding(padding: EdgeInsets.all(10.0), child: Text("Row ${widgets[i]["title"]}"));
   }
 
   loadData() async {
@@ -83,8 +81,7 @@ class _SampleAppPageState extends State<SampleAppPage> {
     // 流的第一个元素被收到后监听会关闭，所以需要新打开一个ReceivePort以接收传入的消息
     ReceivePort response = ReceivePort();
     //通过此发送端口向其对应的“ReceivePort”①发送异步[消息]，这个“消息”指的是发送的参数②。
-    sendPort.send(
-        ["https://jsonplaceholder.typicode.com/posts", response.sendPort]);
+    sendPort.send(["https://jsonplaceholder.typicode.com/posts", response.sendPort]);
     // 获取端口发送来的数据③
     List msg = await response.first;
 

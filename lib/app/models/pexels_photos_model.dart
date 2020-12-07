@@ -8,8 +8,7 @@ class PexelsPhotosModel {
   late int total_results;
   late String next_page;
 
-  PexelsPhotosModel(this.page, this.per_page, this.photosShow,
-      this.total_results, this.next_page);
+  PexelsPhotosModel(this.page, this.per_page, this.photosShow, this.total_results, this.next_page);
 
   PexelsPhotosModel.fromJson(Map<String, dynamic> json) {
     // ignore: unnecessary_null_comparison
@@ -18,6 +17,7 @@ class PexelsPhotosModel {
     this.per_page = json['per_page'];
     //遍历取出photos。
     var photosJson = json['photos'];
+
     // if (photosJson != null) {
     //   this.photos = new List<PexelsPhotosPhotoModel>();
     //   photosJson.forEach((element) =>

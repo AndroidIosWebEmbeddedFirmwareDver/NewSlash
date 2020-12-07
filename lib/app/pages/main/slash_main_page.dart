@@ -39,13 +39,11 @@ class SlashMainPageWidgetsState extends State<SlashMainPageWidgets> {
         child: new Stack(
           children: [
             Align(
-              child: listViewBuildRowCard(
-                  photosShow!.mPexelsPhotosPhotoModel.src.large, context),
+              child: listViewBuildRowCard(photosShow!.mPexelsPhotosPhotoModel.src.large, context),
               alignment: AlignmentDirectional.topStart,
             ),
             Align(
-              child: uiBuildRowIconTapWidget(
-                  dataIndex, MIconButtonType.download, context),
+              child: uiBuildRowIconTapWidget(dataIndex, MIconButtonType.download, context),
               alignment: AlignmentDirectional.topEnd,
             ),
           ],
@@ -65,8 +63,7 @@ class SlashMainPageWidgetsState extends State<SlashMainPageWidgets> {
     );
   }
 
-  uiBuildRowIconTapWidget(
-      dataIndex, MIconButtonType mIconButtonType, BuildContext context) {
+  uiBuildRowIconTapWidget(dataIndex, MIconButtonType mIconButtonType, BuildContext context) {
     return Container(
       constraints: BoxConstraints.expand(
         // width:imageCardWidth!, //w填充屏幕
@@ -99,12 +96,9 @@ class SlashMainPageWidgetsState extends State<SlashMainPageWidgets> {
           Expanded(
             child: Container(
               child: Text(
-                AppSystemParams.init()
-                        .getParams(AppSystemParamsKeys.slashSourceSite) +
+                AppSystemParams.init().getParams(AppSystemParamsKeys.slashSourceSite) +
                     '(' +
-                    (photosShow != null
-                        ? photosShow.mPexelsPhotosPhotoModel.photographer
-                        : '') +
+                    (photosShow != null ? photosShow.mPexelsPhotosPhotoModel.photographer : '') +
                     '),License by coo.',
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -116,13 +110,11 @@ class SlashMainPageWidgetsState extends State<SlashMainPageWidgets> {
             flex: 7,
           ),
           Expanded(
-            child: uiBuildRowIconButton(
-                dataIndex, MIconButtonType.favorite, context),
+            child: uiBuildRowIconButton(dataIndex, MIconButtonType.favorite, context),
             flex: 1,
           ),
           Expanded(
-            child: uiBuildRowIconButton(
-                dataIndex, MIconButtonType.download, context),
+            child: uiBuildRowIconButton(dataIndex, MIconButtonType.download, context),
             flex: 1,
           ),
         ],
@@ -130,8 +122,7 @@ class SlashMainPageWidgetsState extends State<SlashMainPageWidgets> {
     );
   }
 
-  uiBuildRowIconButton(
-      int dataIndex, MIconButtonType mIconButtonType, BuildContext context) {
+  uiBuildRowIconButton(int dataIndex, MIconButtonType mIconButtonType, BuildContext context) {
     var photosShow = mPexelsPhotosModel!.photosShow[dataIndex]!;
     return Container(
       color: photosShow.mButtons[mIconButtonType]!.bgColor,
@@ -150,21 +141,16 @@ class SlashMainPageWidgetsState extends State<SlashMainPageWidgets> {
   }
 
   // 点击发送Event到body容器，实现内容切换效果
-  onRowIconButtonPressed(
-      dataIndex, MIconButtonType mIconButtonType, BuildContext context) {
+  onRowIconButtonPressed(dataIndex, MIconButtonType mIconButtonType, BuildContext context) {
     // EventBusUtil.init().fire(mIconButtonType);
     setState(() {
-      mPexelsPhotosModel!
-              .photosShow[dataIndex]!.mButtons[mIconButtonType]!.isOnpressed =
-          !mPexelsPhotosModel!
-              .photosShow[dataIndex]!.mButtons[mIconButtonType]!.isOnpressed;
+      mPexelsPhotosModel!.photosShow[dataIndex]!.mButtons[mIconButtonType]!.isOnpressed =
+          !mPexelsPhotosModel!.photosShow[dataIndex]!.mButtons[mIconButtonType]!.isOnpressed;
     });
     Future.delayed(Duration(milliseconds: 300)).then((value) {
       setState(() {
-        mPexelsPhotosModel!
-                .photosShow[dataIndex]!.mButtons[mIconButtonType]!.isOnpressed =
-            !mPexelsPhotosModel!
-                .photosShow[dataIndex]!.mButtons[mIconButtonType]!.isOnpressed;
+        mPexelsPhotosModel!.photosShow[dataIndex]!.mButtons[mIconButtonType]!.isOnpressed =
+            !mPexelsPhotosModel!.photosShow[dataIndex]!.mButtons[mIconButtonType]!.isOnpressed;
       });
       print(dataIndex);
     });
@@ -176,8 +162,7 @@ class SlashMainPageWidgetsState extends State<SlashMainPageWidgets> {
           return AlertDialog(
             title: Text('Notice'),
             content: Text('Are you sure to dowanload? \n' +
-                mPexelsPhotosModel!.photosShow[dataIndex]!
-                    .mPexelsPhotosPhotoModel.src.original),
+                mPexelsPhotosModel!.photosShow[dataIndex]!.mPexelsPhotosPhotoModel.src.original),
             actions: <Widget>[
               FlatButton(
                 onPressed: () {
@@ -189,8 +174,7 @@ class SlashMainPageWidgetsState extends State<SlashMainPageWidgets> {
               FlatButton(
                 onPressed: () {
                   Navigator.of(context)!.pop();
-                  _launchUrl(mPexelsPhotosModel!.photosShow[dataIndex]!
-                      .mPexelsPhotosPhotoModel.src.original);
+                  _launchUrl(mPexelsPhotosModel!.photosShow[dataIndex]!.mPexelsPhotosPhotoModel.src.original);
                 },
                 textColor: Colors.red,
                 child: Text('sure'),
@@ -253,8 +237,8 @@ class SlashMainPageWidgetsState extends State<SlashMainPageWidgets> {
     // TODO: implement initState
     super.initState();
     // 初始化数据
-    HttpUtil.init().httpSearchImage(SlashSource.Pexels,
-        {'page': '1', 'per_page': '10', 'query': 'river'}).then((value) {
+    HttpUtil.init()
+        .httpSearchImage(SlashSource.Pexels, {'page': '1', 'per_page': '10', 'query': 'river'}).then((value) {
       mPexelsPhotosModel = PexelsPhotosModel.fromJson(jsonDecode(value!));
       setState(() {
         _randomImagesSets = value;

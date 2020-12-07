@@ -52,8 +52,7 @@ class SlashAppBottomWidgetsState extends State<SlashAppBottomWidgets> {
     ));
   }
 
-  uiBuildHeaderIconButton(
-      MIconButtonType? mIconButtonType, BuildContext? context) {
+  uiBuildHeaderIconButton(MIconButtonType? mIconButtonType, BuildContext? context) {
     return Expanded(
       child: Container(
         child: Center(
@@ -69,13 +68,11 @@ class SlashAppBottomWidgetsState extends State<SlashAppBottomWidgets> {
                 ),
                 onPressed: () {
                   setState(() {
-                    mShowButtons[mIconButtonType]!.isOnpressed =
-                        !mShowButtons[mIconButtonType]!.isOnpressed;
+                    mShowButtons[mIconButtonType]!.isOnpressed = !mShowButtons[mIconButtonType]!.isOnpressed;
                   });
                   Future.delayed(Duration(milliseconds: 300)).then((value) {
                     setState(() {
-                      mShowButtons[mIconButtonType]!.isOnpressed =
-                          !mShowButtons[mIconButtonType]!.isOnpressed;
+                      mShowButtons[mIconButtonType]!.isOnpressed = !mShowButtons[mIconButtonType]!.isOnpressed;
                     });
                   });
                   onHeaderIconButtonPressed(mIconButtonType!, context!);
@@ -91,8 +88,7 @@ class SlashAppBottomWidgetsState extends State<SlashAppBottomWidgets> {
   }
 
   // 点击发送Event到body容器，实现内容切换效果
-  onHeaderIconButtonPressed(
-      MIconButtonType mIconButtonType, BuildContext context) {
+  onHeaderIconButtonPressed(MIconButtonType mIconButtonType, BuildContext context) {
     EventBusUtil.init().fire(mIconButtonType);
   }
 

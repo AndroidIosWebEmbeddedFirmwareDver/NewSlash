@@ -10,13 +10,6 @@ class PexelsPhotosPhotoShowButtonModel {
   late String showText;
   late Color showTextColor;
 
-  PexelsPhotosPhotoShowButtonModel(
-      this.key,
-      this.bgColor,
-      this.showIcons,
-      this.onPressedColor,
-      this.normalColor,
-      this.isOnpressed,
-      this.showText,
-      this.showTextColor);
+  PexelsPhotosPhotoShowButtonModel(this.key, this.bgColor, this.showIcons, this.onPressedColor, this.normalColor,
+      this.isOnpressed, this.showText, this.showTextColor);
 }

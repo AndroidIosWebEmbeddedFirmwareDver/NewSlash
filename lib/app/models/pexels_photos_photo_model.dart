@@ -11,16 +11,8 @@ class PexelsPhotosPhotoModel {
   late PexelsPhotosPhotoSrcModel src;
   late bool liked;
 
-  PexelsPhotosPhotoModel(
-      this.id,
-      this.width,
-      this.height,
-      this.url,
-      this.photographer,
-      this.photographer_url,
-      this.photographer_id,
-      this.liked,
-      this.src);
+  PexelsPhotosPhotoModel(this.id, this.width, this.height, this.url, this.photographer, this.photographer_url,
+      this.photographer_id, this.liked, this.src);
   PexelsPhotosPhotoModel.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
     this.id = json['id'];

@@ -7,8 +7,8 @@ class PexelsPhotosPhotoSrcModel {
   late String portrait;
   late String landscape;
   late String tiny;
-  PexelsPhotosPhotoSrcModel(this.original, this.large2x, this.large,
-      this.medium, this.small, this.portrait, this.landscape, this.tiny);
+  PexelsPhotosPhotoSrcModel(
+      this.original, this.large2x, this.large, this.medium, this.small, this.portrait, this.landscape, this.tiny);
 
   PexelsPhotosPhotoSrcModel.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
