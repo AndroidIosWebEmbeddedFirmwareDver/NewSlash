@@ -41,33 +41,6 @@ class SlashAppBottomWidgetsState extends State<SlashAppBottomWidgets> {
       Colors.white,
     ),
   };
-  // static var mainIconButton2 = {
-  //   MIconButtonType.main: {
-  //     MIconButtonStyle.showIcons: Icons.home,
-  //     MIconButtonStyle.isOnpressed: false,
-  //     MIconButtonStyle.onPressedColor: Colors.blue,
-  //     MIconButtonStyle.normalColor: Colors.white,
-  //     MIconButtonStyle.showText: 'tttt',
-  //     MIconButtonStyle.showTextColor: Colors.white,
-  //   },
-  //   MIconButtonType.msg: {
-  //     MIconButtonStyle.showIcons: Icons.message,
-  //     MIconButtonStyle.isOnpressed: false,
-  //     MIconButtonStyle.onPressedColor: Colors.blue,
-  //     MIconButtonStyle.normalColor: Colors.white,
-  //     MIconButtonStyle.showText: 'tttt',
-  //     MIconButtonStyle.showTextColor: Colors.white,
-  //   },
-  //   MIconButtonType.user: {
-  //     MIconButtonStyle.showIcons: Icons.verified_user,
-  //     MIconButtonStyle.isOnpressed: false,
-  //     MIconButtonStyle.onPressedColor: Colors.blue,
-  //     MIconButtonStyle.normalColor: Colors.white,
-  //     MIconButtonStyle.showText: 'tttt',
-  //     MIconButtonStyle.showTextColor: Colors.white,
-  //   }
-  // };
-  //
   uiBuildHeader(BuildContext context) {
     return Container(
         child: Row(
@@ -93,31 +66,16 @@ class SlashAppBottomWidgetsState extends State<SlashAppBottomWidgets> {
                   color: mShowButtons[mIconButtonType]!.isOnpressed
                       ? mShowButtons[mIconButtonType]!.onPressedColor
                       : mShowButtons[mIconButtonType]!.normalColor,
-                  // mShowButtons![mIconButtonType][MIconButtonStyle.showIcons]!,
-                  // color: mainIconButton[mIconButtonType]
-                  //         [MIconButtonStyle.isOnpressed]
-                  //     ? mainIconButton[mIconButtonType]
-                  //         [MIconButtonStyle.onPressedColor]
-                  //     : mainIconButton[mIconButtonType]
-                  //         [MIconButtonStyle.normalColor],
                 ),
                 onPressed: () {
                   setState(() {
                     mShowButtons[mIconButtonType]!.isOnpressed =
                         !mShowButtons[mIconButtonType]!.isOnpressed;
-                    // mainIconButton[mIconButtonType!]![
-                    //     MIconButtonStyle.isOnpressed] = (mainIconButton[
-                    //         mIconButtonType]![MIconButtonStyle.isOnpressed] ==
-                    //     false);
                   });
                   Future.delayed(Duration(milliseconds: 300)).then((value) {
                     setState(() {
                       mShowButtons[mIconButtonType]!.isOnpressed =
                           !mShowButtons[mIconButtonType]!.isOnpressed;
-                      // mainIconButton[mIconButtonType!]![
-                      //     MIconButtonStyle.isOnpressed] = (mainIconButton[
-                      //         mIconButtonType]![MIconButtonStyle.isOnpressed] ==
-                      //     false);
                     });
                   });
                   onHeaderIconButtonPressed(mIconButtonType!, context!);

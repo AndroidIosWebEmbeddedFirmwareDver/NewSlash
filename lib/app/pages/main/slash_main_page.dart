@@ -19,6 +19,8 @@ class SlashMainPageWidgets extends StatefulWidget {
 class SlashMainPageWidgetsState extends State<SlashMainPageWidgets> {
   PexelsPhotosModel? mPexelsPhotosModel;
   var _randomImagesSets = '';
+  var imageCardWidth;
+  var imageCardHeight;
 
   ListView getListView() => ListView.builder(
       itemCount: mPexelsPhotosModel!.photosShow.length,
@@ -42,7 +44,6 @@ class SlashMainPageWidgetsState extends State<SlashMainPageWidgets> {
               alignment: AlignmentDirectional.topStart,
             ),
             Align(
-              // child: uiBuildRowIconButton(dataIndex,MIconButtonType.download,context),
               child: uiBuildRowIconTapWidget(
                   dataIndex, MIconButtonType.download, context),
               alignment: AlignmentDirectional.topEnd,
@@ -68,8 +69,8 @@ class SlashMainPageWidgetsState extends State<SlashMainPageWidgets> {
       dataIndex, MIconButtonType mIconButtonType, BuildContext context) {
     return Container(
       constraints: BoxConstraints.expand(
-        // width: MediaQuery.of(context).size.width * 1 / 5, //w填充屏幕
-        height: MediaQuery.of(context).size.height * 3 / 5, //h填满屏幕1/2
+        // width:imageCardWidth!, //w填充屏幕
+        height: imageCardHeight!, //h填满屏幕1/2
       ),
       child: Column(
         children: [
@@ -77,7 +78,7 @@ class SlashMainPageWidgetsState extends State<SlashMainPageWidgets> {
             child: Container(
               color: Colors.transparent,
             ),
-            flex: 12,
+            flex: 9,
           ),
           Expanded(
             child: uiBuildRowIconTapContentWidget(dataIndex, context),
@@ -153,17 +154,17 @@ class SlashMainPageWidgetsState extends State<SlashMainPageWidgets> {
       dataIndex, MIconButtonType mIconButtonType, BuildContext context) {
     // EventBusUtil.init().fire(mIconButtonType);
     setState(() {
-      // mPexelsPhotosModel.photosShow[dataIndex].rowIconButton[mIconButtonType]
-      //     [MIconButtonStyle.isOnpressed] = !mPexelsPhotosModel
-      //         .photosShow[dataIndex].rowIconButton[mIconButtonType]
-      //     [MIconButtonStyle.isOnpressed];
+      mPexelsPhotosModel!
+              .photosShow[dataIndex]!.mButtons[mIconButtonType]!.isOnpressed =
+          !mPexelsPhotosModel!
+              .photosShow[dataIndex]!.mButtons[mIconButtonType]!.isOnpressed;
     });
     Future.delayed(Duration(milliseconds: 300)).then((value) {
       setState(() {
-        // mPexelsPhotosModel.photosShow[dataIndex].rowIconButton[mIconButtonType]
-        //     [MIconButtonStyle.isOnpressed] = !mPexelsPhotosModel
-        //         .photosShow[dataIndex].rowIconButton[mIconButtonType]
-        //     [MIconButtonStyle.isOnpressed];
+        mPexelsPhotosModel!
+                .photosShow[dataIndex]!.mButtons[mIconButtonType]!.isOnpressed =
+            !mPexelsPhotosModel!
+                .photosShow[dataIndex]!.mButtons[mIconButtonType]!.isOnpressed;
       });
       print(dataIndex);
     });
@@ -217,8 +218,8 @@ class SlashMainPageWidgetsState extends State<SlashMainPageWidgets> {
         repeat: ImageRepeat.noRepeat,
       ),
       constraints: BoxConstraints.expand(
-        width: MediaQuery.of(context).size.width, //w填充屏幕
-        height: MediaQuery.of(context).size.height * 3 / 5, //h填满屏幕1/2
+        width: imageCardWidth!,
+        height: imageCardHeight!,
       ),
     );
   }
@@ -240,6 +241,10 @@ class SlashMainPageWidgetsState extends State<SlashMainPageWidgets> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
+    // 初始化参数
+    imageCardWidth = MediaQuery.of(context).size.width; //w填充屏幕
+    imageCardHeight = MediaQuery.of(context).size.width * 9 / 16; //保持9/16
+
     return mPexelsPhotosModel != null ? getListView() : uiBuild(context);
   }
 
@@ -247,13 +252,12 @@ class SlashMainPageWidgetsState extends State<SlashMainPageWidgets> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    // 初始化数据
     HttpUtil.init().httpSearchImage(SlashSource.Pexels,
-        {'page': '1', 'per_page': '100', 'query': 'river'}).then((value) {
-      // mPexelsPhotosModel = PexelsPhotosModel.fromJson(jsonDecode(value!));
+        {'page': '1', 'per_page': '10', 'query': 'river'}).then((value) {
+      mPexelsPhotosModel = PexelsPhotosModel.fromJson(jsonDecode(value!));
       setState(() {
-        if (value != null) {
-          _randomImagesSets = value;
-        }
+        _randomImagesSets = value;
       });
     });
   }
