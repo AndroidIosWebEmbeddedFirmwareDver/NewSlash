@@ -7,6 +7,8 @@ enum QueryNetworkType { Http, Https, Socket, Socket5 }
 
 // 主页按钮
 enum MIconButtonType { main, msg, user, favorite, download }
+
+// 按钮显示内容
 enum MIconButtonStyle { key, bgColor, showIcons, onPressedColor, normalColor, isOnpressed, showText, showTextColor }
 
 //APP 全局参数

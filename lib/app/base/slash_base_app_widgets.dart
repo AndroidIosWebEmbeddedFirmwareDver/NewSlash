@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:newslash/app/slash_app_bottom_widgets.dart';
-import 'package:newslash/app/slash_main_body_widgets.dart';
-import 'package:newslash/utils/event_bus_util.dart';
+import 'package:newslash/app/base/bottom/app_bottom_widgets.dart';
+import 'package:newslash/app/base/slash_base_body_widgets.dart';
 
 class SlashMainWidgets extends StatefulWidget {
   @override
@@ -9,18 +8,11 @@ class SlashMainWidgets extends StatefulWidget {
 }
 
 class SlashMainWidgetsState extends State<SlashMainWidgets> {
-  aEventBusDemo() {
-    EventBusUtil.init().on()?.listen((event) {
-      print('aEventBusDemo:$event');
-    });
-  }
-
-  //
   uiBuildBody(BuildContext context) {
     return Container();
   }
 
-  // 构建UI，采用Row
+  // 构建UI，采用Column
   uiBuild(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -32,7 +24,7 @@ class SlashMainWidgetsState extends State<SlashMainWidgets> {
             flex: 163),
         Expanded(
             child: Container(
-              child: SlashAppBottomWidgets(),
+              child: AppBottomWidgets(),
             ),
             flex: 10),
       ],
@@ -51,6 +43,6 @@ class SlashMainWidgetsState extends State<SlashMainWidgets> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    aEventBusDemo();
+    // aEventBusDemo();
   }
 }

@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import 'package:newslash/app/slash_app_widgets.dart';
+import 'package:newslash/app/base/slash_base_app_widgets.dart';
 import 'plugins/window_size/lib/window_size.dart' as window_size;
 
 void main() {
@@ -30,8 +30,7 @@ initWindows() {
       //设置窗口信息
       window_size.setWindowFrame(frame);
       //设置窗口顶部标题
-      window_size
-          .setWindowTitle('Flutter Testbed on ${Platform.operatingSystem}');
+      window_size.setWindowTitle('Flutter Testbed on ${Platform.operatingSystem}');
       if (Platform.isMacOS) {
         window_size.setWindowMinSize(Size(800, 600));
         window_size.setWindowMaxSize(Size(1600, 1200));

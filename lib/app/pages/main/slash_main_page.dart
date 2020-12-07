@@ -236,6 +236,7 @@ class SlashMainPageWidgetsState extends State<SlashMainPageWidgets> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    print('am init .....');
     // 初始化数据
     HttpUtil.init()
         .httpSearchImage(SlashSource.Pexels, {'page': '1', 'per_page': '10', 'query': 'river'}).then((value) {
