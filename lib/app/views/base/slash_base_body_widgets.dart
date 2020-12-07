@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:newslash/app/pages/main/slash_main_page.dart';
-import 'package:newslash/app/pages/msg/slash_msg_page.dart';
-import 'package:newslash/app/pages/user/slash_user_page.dart';
+import 'package:newslash/app/views/pages/main/slash_main_page.dart';
+import 'package:newslash/app/views/pages/msg/slash_msg_page.dart';
+import 'package:newslash/app/views/pages/user/slash_user_page.dart';
 import 'package:newslash/utils/enum_util.dart';
 import 'package:newslash/utils/event_bus_util.dart';
 
@@ -16,7 +16,7 @@ class SlashMainBodyWidgetsState extends State<SlashMainBodyWidgets> {
   //regist event
   registEnentBusEnent<T>() {
     EventBusUtil.init().on<T>()?.listen((event) {
-      // print('aEvent:$event');
+      print('aEvent:$event');
       buildBodRouterWidget(event);
     });
   }

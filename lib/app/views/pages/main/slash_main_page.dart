@@ -18,7 +18,6 @@ class SlashMainPageWidgets extends StatefulWidget {
 
 class SlashMainPageWidgetsState extends State<SlashMainPageWidgets> {
   PexelsPhotosModel? mPexelsPhotosModel;
-  var _randomImagesSets = '';
   var imageCardWidth;
   var imageCardHeight;
 
@@ -215,7 +214,7 @@ class SlashMainPageWidgetsState extends State<SlashMainPageWidgets> {
       children: [
         Expanded(
             child: Container(
-              child: Text(_randomImagesSets),
+              child: Text(''),
             ),
             flex: 150),
       ],
@@ -240,9 +239,8 @@ class SlashMainPageWidgetsState extends State<SlashMainPageWidgets> {
     // 初始化数据
     HttpUtil.init()
         .httpSearchImage(SlashSource.Pexels, {'page': '1', 'per_page': '10', 'query': 'river'}).then((value) {
-      mPexelsPhotosModel = PexelsPhotosModel.fromJson(jsonDecode(value!));
       setState(() {
-        _randomImagesSets = value;
+        mPexelsPhotosModel = PexelsPhotosModel.fromJson(jsonDecode(value!));
       });
     });
   }

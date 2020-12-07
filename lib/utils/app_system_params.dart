@@ -1,6 +1,8 @@
 import 'package:newslash/utils/enum_util.dart';
 
 class AppSystemParams {
+  // TODO ;
+  static String cacahImageTyes = 'river';
   var appSystemParams = {
     AppSystemParamsKeys.slashSource: SlashSource.Pexels,
     AppSystemParamsKeys.slashSourceSite: 'https://pixabay.com',
