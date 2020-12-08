@@ -14,3 +14,6 @@ a tool for the  open source images browser and download.
 
 ## .2020120702,some new things
 .解决底部导航切换导致重建问题
+
+## .2020120801,lazy_listview
+.lazy_listview 封装 part1
