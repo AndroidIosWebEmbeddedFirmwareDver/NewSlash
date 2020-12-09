@@ -1,25 +1,15 @@
 import 'package:flutter/material.dart';
 
-// class LazyLoadListViewWidget extends StatefulWidget {
-//   @override
-//   State<StatefulWidget> createState() => LazyLoadListViewWidgetState();
-// }
-
-// abstract class LazyLoadListViewWidgetInterface {
-//   onLazyLoadListViewInint() {}
-//   onLazyLoadListViewRefresh() {}
-//   onLazyLoadListViewLoadMore() {}
-// }
-
 typedef LazyLoadListView_OnLazyLoadListViewInint = void Function();
-typedef LazyLoadListView_OnLazyLoadListViewRefresh = void Function();
-typedef LazyLoadListView_OnLazyLoadListViewLoadMore = void Function();
+typedef LazyLoadListView_OnLazyLoadListViewRefresh = Future<void> Function();
+typedef LazyLoadListView_OnLazyLoadListViewLoadMore = void Function(double metricsPixels, double metricsMaxScrollExtent);
 typedef LazyLoadListView_IndexedWidgetBuilder = Widget Function(BuildContext context, int index);
 
-// class LazyLoadListViewWidgetState extends State<LazyLoadListViewWidget> implements LazyLoadListViewWidgetInterface {
+// ignore: must_be_immutable
 class LazyLoadListViewWidget extends StatelessWidget {
-  ScrollController? _scrollController;
   int? _lazyLoadListViewItemCount;
+  double? _lazyLoadListViewScrollInfoMetricsPixels;
+  double? _lazyLoadListViewScrollInfoMetricsMaxScrollExtent;
   LazyLoadListView_IndexedWidgetBuilder? _lazyLoadListViewItemBuilder;
   LazyLoadListView_OnLazyLoadListViewRefresh? _lazyLoadListViewOnRefresh;
   LazyLoadListView_OnLazyLoadListViewLoadMore? _lazyLoadListViewOnLoadMore;
@@ -29,7 +19,7 @@ class LazyLoadListViewWidget extends StatelessWidget {
     required LazyLoadListView_IndexedWidgetBuilder itemBuilder,
     required LazyLoadListView_OnLazyLoadListViewRefresh onRefresh,
     required LazyLoadListView_OnLazyLoadListViewLoadMore onLoadMore,
-  }) : assert(itemCount == null || itemCount >= 0) {
+  }) : assert(itemCount >= 0) {
     _lazyLoadListViewItemCount = itemCount;
     _lazyLoadListViewItemBuilder = itemBuilder;
     _lazyLoadListViewOnRefresh = onRefresh;
@@ -38,45 +28,30 @@ class LazyLoadListViewWidget extends StatelessWidget {
 
   // 构建UI，采用Row
   uiBuild(BuildContext context) {
-    _scrollController = ScrollController();
     return ListView.builder(
       itemCount: _lazyLoadListViewItemCount,
-      controller: _scrollController!,
       itemBuilder: _lazyLoadListViewItemBuilder!,
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return uiBuild(context);
-  }
-
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-  //   onLazyLoadListViewInint();
-  // }
-
-  @override
-  onLazyLoadListViewInint() {
-    // TODO: implement onLazyLoadListViewInint
-    // throw UnimplementedError();
-    print('onLazyLoadListViewInint');
-  }
-
-  @override
-  onLazyLoadListViewLoadMore() {
-    // TODO: implement onLazyLoadListViewLoadMore
-    // throw UnimplementedError();
-    print('onLazyLoadListViewLoadMore');
-  }
-
-  @override
-  onLazyLoadListViewRefresh() {
-    // TODO: implement onLazyLoadListViewRefresh
-    // throw UnimplementedError();
-    print('onLazyLoadListViewRefresh');
+    // return uiBuild(context);
+    return NotificationListener<ScrollNotification>(
+      //pull dowan up to load more
+      onNotification: (ScrollNotification scrollInfo) {
+        if (scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent && scrollInfo.metrics.pixels != _lazyLoadListViewScrollInfoMetricsPixels) {
+          _lazyLoadListViewScrollInfoMetricsPixels = scrollInfo.metrics.pixels;
+          _lazyLoadListViewScrollInfoMetricsMaxScrollExtent = scrollInfo.metrics.maxScrollExtent;
+          this._lazyLoadListViewOnLoadMore!(_lazyLoadListViewScrollInfoMetricsPixels!, _lazyLoadListViewScrollInfoMetricsMaxScrollExtent!);
+        }
+        return true;
+      },
+      child: RefreshIndicator(
+        //pull dowan to refresh
+        onRefresh: this._lazyLoadListViewOnRefresh!,
+        child: uiBuild(context),
+      ),
+    );
   }
 }

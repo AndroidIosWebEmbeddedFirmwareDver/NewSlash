@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:newslash/plugins/lazy_load_list_view/lazy_load_list_view_widget.dart';
-import 'package:newslash/utils/enum_util.dart';
-import 'package:newslash/utils/event_bus_util.dart';
 import 'package:newslash/utils/toast_msg_util.dart';
 
 class SlashMsgPageWidgets extends StatefulWidget {
@@ -24,11 +22,12 @@ class SlashMsgPageWidgetsState extends State<SlashMsgPageWidgets> {
                 itemBuilder: (BuildContext context, int position) {
                   return getRowFrameLayout(position, context);
                 },
-                onLoadMore: () {
+                onLoadMore: (double metricsPixels, double metricsMaxScrollExtent) {
                   ToastMsgUtil.showNromMsg(context, 'onLoadMore');
+                  print('onLoadMore:$metricsPixels');
                   addDatas();
                 },
-                onRefresh: () {
+                onRefresh: () async {
                   ToastMsgUtil.showNromMsg(context, 'onRefresh');
                   initDatas();
                 },
@@ -70,10 +69,9 @@ class SlashMsgPageWidgetsState extends State<SlashMsgPageWidgets> {
     _itemCounts.add('value');
     _itemCounts.add('value');
     _itemCounts.add('value');
-    _itemCounts.add('value');
-    _itemCounts.add('value');
-    _itemCounts.add('value');
-    _itemCounts.add('value');
+    setState(() {
+      // _itemCounts = _itemCounts;
+    });
   }
 
   addDatas() {
@@ -82,10 +80,9 @@ class SlashMsgPageWidgetsState extends State<SlashMsgPageWidgets> {
     _itemCounts.add('value');
     _itemCounts.add('value');
     _itemCounts.add('value');
-    _itemCounts.add('value');
-    _itemCounts.add('value');
-    _itemCounts.add('value');
-    _itemCounts.add('value');
+    setState(() {
+      // _itemCounts = _itemCounts;
+    });
   }
 
   @override
