@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
+abstract class LazyLoadListViewWidgetInterface {
+  Future<void> onLazyLoadListViewRefresh(BuildContext context);
+  void onLazyLoadListViewLoadMore(BuildContext context, double metricsPixels, double metricsMaxScrollExtent);
+}
+
 typedef LazyLoadListView_OnLazyLoadListViewInint = void Function();
-typedef LazyLoadListView_OnLazyLoadListViewRefresh = Future<void> Function();
-typedef LazyLoadListView_OnLazyLoadListViewLoadMore = void Function(double metricsPixels, double metricsMaxScrollExtent);
+typedef LazyLoadListView_OnLazyLoadListViewRefresh = Future<void> Function(BuildContext context);
+typedef LazyLoadListView_OnLazyLoadListViewLoadMore = void Function(BuildContext context, double metricsPixels, double metricsMaxScrollExtent);
 typedef LazyLoadListView_IndexedWidgetBuilder = Widget Function(BuildContext context, int index);
 
 // ignore: must_be_immutable
@@ -43,13 +48,15 @@ class LazyLoadListViewWidget extends StatelessWidget {
         if (scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent && scrollInfo.metrics.pixels != _lazyLoadListViewScrollInfoMetricsPixels) {
           _lazyLoadListViewScrollInfoMetricsPixels = scrollInfo.metrics.pixels;
           _lazyLoadListViewScrollInfoMetricsMaxScrollExtent = scrollInfo.metrics.maxScrollExtent;
-          this._lazyLoadListViewOnLoadMore!(_lazyLoadListViewScrollInfoMetricsPixels!, _lazyLoadListViewScrollInfoMetricsMaxScrollExtent!);
+          this._lazyLoadListViewOnLoadMore!(context, _lazyLoadListViewScrollInfoMetricsPixels!, _lazyLoadListViewScrollInfoMetricsMaxScrollExtent!);
         }
         return true;
       },
       child: RefreshIndicator(
         //pull dowan to refresh
-        onRefresh: this._lazyLoadListViewOnRefresh!,
+        onRefresh: () async {
+          this._lazyLoadListViewOnRefresh!(context);
+        },
         child: uiBuild(context),
       ),
     );

@@ -7,7 +7,7 @@ class SlashMsgPageWidgets extends StatefulWidget {
   State<StatefulWidget> createState() => SlashMsgPageWidgetsState();
 }
 
-class SlashMsgPageWidgetsState extends State<SlashMsgPageWidgets> {
+class SlashMsgPageWidgetsState extends State<SlashMsgPageWidgets> implements LazyLoadListViewWidgetInterface {
   late List<String> _itemCounts;
 
   // 构建UI，采用Row
@@ -19,18 +19,13 @@ class SlashMsgPageWidgetsState extends State<SlashMsgPageWidgets> {
             child: Container(
               child: LazyLoadListViewWidget.builder(
                 itemCount: _itemCounts.length,
-                itemBuilder: (BuildContext context, int position) {
-                  return getRowFrameLayout(position, context);
-                },
-                onLoadMore: (double metricsPixels, double metricsMaxScrollExtent) {
-                  ToastMsgUtil.showNromMsg(context, 'onLoadMore');
-                  print('onLoadMore:$metricsPixels');
-                  addDatas();
-                },
-                onRefresh: () async {
-                  ToastMsgUtil.showNromMsg(context, 'onRefresh');
-                  initDatas();
-                },
+                itemBuilder: (BuildContext context, int position) => getRowFrameLayout(position, context),
+                onLoadMore: (BuildContext context, double metricsPixels, double metricsMaxScrollExtent) =>
+                    onLazyLoadListViewLoadMore(context, metricsPixels, metricsMaxScrollExtent),
+                onRefresh: (
+                  BuildContext context,
+                ) async =>
+                    this.onLazyLoadListViewRefresh(context),
               ),
             ),
             flex: 150),
@@ -96,5 +91,20 @@ class SlashMsgPageWidgetsState extends State<SlashMsgPageWidgets> {
     // TODO: implement initState
     super.initState();
     initDatas();
+  }
+
+  @override
+  Future<void> onLazyLoadListViewRefresh(BuildContext context) async {
+    // TODO: implement onLazyLoadListViewRefresh
+    ToastMsgUtil.showNromMsg(context, 'onRefresh');
+    initDatas();
+  }
+
+  @override
+  void onLazyLoadListViewLoadMore(BuildContext context, double metricsPixels, double metricsMaxScrollExtent) {
+    // TODO: implement onLazyLoadListViewLoadMore
+    ToastMsgUtil.showNromMsg(context, 'onLoadMore');
+    // print('onLoadMore:$metricsPixels');
+    addDatas();
   }
 }

@@ -4,7 +4,7 @@ class PexelsPhotosModel {
   late int page;
   late int per_page;
   // List<PexelsPhotosPhotoModel> photos;
-  late List<PexelsPhotosShowModel?> photosShow;
+  late List<PexelsPhotosShowModel> photosShow;
   late int total_results;
   late String next_page;
 
@@ -17,14 +17,8 @@ class PexelsPhotosModel {
     this.per_page = json['per_page'];
     //遍历取出photos。
     var photosJson = json['photos'];
-
-    // if (photosJson != null) {
-    //   this.photos = new List<PexelsPhotosPhotoModel>();
-    //   photosJson.forEach((element) =>
-    //       this.photos.add(PexelsPhotosPhotoModel.fromJson(element)));
-    // }
     if (photosJson != null) {
-      this.photosShow = <PexelsPhotosShowModel?>[];
+      this.photosShow = <PexelsPhotosShowModel>[];
       int indexKey = 0;
       photosJson.forEach((element) {
         this.photosShow.add(PexelsPhotosShowModel?.fromJson(indexKey, element));
