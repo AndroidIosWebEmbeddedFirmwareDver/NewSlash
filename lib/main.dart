@@ -2,12 +2,14 @@ import 'dart:io';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:newslash/app/views/base/slash_base_app_widgets.dart';
+import 'package:newslash/test/autoreject/auto_reject_app.dart';
 import 'plugins/window_size/lib/window_size.dart' as window_size;
 
 void main() {
   // initWindows();
   runApp(MaterialApp(
     // home: IsolateDemoSampleApp(),
+    // home: AutoRejectApp(),
     home: SlashMainWidgets(),
   ));
 }

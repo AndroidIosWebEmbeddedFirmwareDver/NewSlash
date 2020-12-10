@@ -4,6 +4,10 @@ import 'package:newslash/utils/enum_util.dart' as EnumUtil;
 import 'package:newslash/utils/http_api.dart';
 
 class HttpUtilResponse {
+  static final int httpResponseTrueCode = 200;
+  static final int httpResponseFailCode = 500;
+  static final int httpResponseNotFoundCode = 404;
+
   int responseStatusCode;
   String responseValueStr;
   HttpUtilResponse(this.responseStatusCode, this.responseValueStr);
@@ -21,45 +25,63 @@ class HttpUtil {
   }
 
   // 请求网络
-  Future<HttpUtilResponse> httpDoRequest(EnumUtil.QueryNetworkType mQueryNetworkType, EnumUtil.QueryMethodType mQueryMethodType, String authority, String unencodePath,
+  Future<HttpUtilResponse> httpDoGetRequest(EnumUtil.QueryNetworkType mQueryNetworkType, EnumUtil.QueryMethodType mQueryMethodType, String authority, String unencodePath,
       [List<Map<String, String>>? headers, Map<String, String>? jsonQueryParams]) async {
-    var mUri;
-    if (mQueryNetworkType == EnumUtil.QueryNetworkType.Http) {
-      mUri = new Uri.http(authority, unencodePath, jsonQueryParams);
-    } else if (mQueryNetworkType == EnumUtil.QueryNetworkType.Https) {
-      mUri = new Uri.https(authority, unencodePath, jsonQueryParams);
-    }
-    // // print("mUri:$mUri");
-    HttpClientRequest? request;
-    if (mQueryMethodType == EnumUtil.QueryMethodType.Get) {
-      request = await mHttpClient.getUrl(mUri);
-    }
-    if (mQueryMethodType == EnumUtil.QueryMethodType.Post) {
-      request = await mHttpClient.postUrl(mUri);
-    }
-    //添加请求头
-    if (headers != null) {
-      headers.forEach((element) {
-        element.forEach((key, value) {
-          // print('key:$key,value:$value');
-          request!.headers.add(key, value);
+    return mHttpClient
+        .getUrl(mQueryNetworkType == EnumUtil.QueryNetworkType.Http
+            ? Uri.http(authority, unencodePath, jsonQueryParams)
+            : Uri.https(authority, unencodePath, jsonQueryParams))
+        .then((HttpClientRequest mRequest) {
+      //添加请求头
+      if (headers != null) {
+        headers.forEach((element) {
+          element.forEach((key, value) {
+            // print('key:$key,value:$value');
+            mRequest.headers.add(key, value);
+          });
         });
-      });
-    }
-    // print("request:${request.headers}");
-    //开始请求
-    var response = await request!.close();
-    var responseStatusCode = response.statusCode;
-    print('http-request-status:$responseStatusCode');
-    String responseBody = await response.transform(Utf8Decoder()).join();
-    return HttpUtilResponse(response.statusCode, responseBody);
+      }
+      return mRequest.close();
+    }).then((HttpClientResponse mResponse) async {
+      var responseStatusCode = mResponse.statusCode;
+      // print('http-request-status:$responseStatusCode');
+      String responseBody = await mResponse.transform(Utf8Decoder()).join();
+      return HttpUtilResponse(responseStatusCode, responseBody);
+    });
+  }
+
+  // 请求网络
+  Future<HttpUtilResponse> httpDoPostRequest(
+      EnumUtil.QueryNetworkType mQueryNetworkType, EnumUtil.QueryMethodType mQueryMethodType, String authority, String unencodePath,
+      [List<Map<String, String>>? headers, Object? jsonQueryParams]) async {
+    return mHttpClient
+        .postUrl(mQueryNetworkType == EnumUtil.QueryNetworkType.Http ? Uri.http(authority, unencodePath) : Uri.https(authority, unencodePath))
+        .then((HttpClientRequest mRequest) {
+      //添加请求头
+      if (headers != null) {
+        headers.forEach((element) {
+          element.forEach((key, value) {
+            // print('key:$key,value:$value');
+            mRequest.headers.add(key, value);
+          });
+        });
+      }
+      //添加请求Body
+      mRequest.add(utf8.encode(json.encode(jsonQueryParams)));
+      return mRequest.close();
+    }).then((HttpClientResponse mResponse) async {
+      var responseStatusCode = mResponse.statusCode;
+      // print('http-request-status:$responseStatusCode');
+      String responseBody = await mResponse.transform(Utf8Decoder()).join();
+      return HttpUtilResponse(responseStatusCode, responseBody);
+    });
   }
 
   //Http
   Future<HttpUtilResponse?> httpSearchImage(EnumUtil.SlashSource slashSource, [Map<String, String>? queryParams]) async {
     switch (slashSource) {
       case EnumUtil.SlashSource.Pexels:
-        return httpDoRequest(
+        return httpDoGetRequest(
             HttpApi.instance.setSlashSource(slashSource).getNetworkType()!,
             HttpApi.instance.setSlashSource(slashSource).getUnencodePathOfSearchImageRequestType()!,
             HttpApi.instance.setSlashSource(slashSource).getAuthority()!,
@@ -77,6 +99,6 @@ class HttpUtil {
 
   //Http
   Future<HttpUtilResponse?> httpSearchaDemo([Map<String, String>? queryParams]) async {
-    return httpDoRequest(EnumUtil.QueryNetworkType.Http, EnumUtil.QueryMethodType.Get, 'baidu.com', 'a/a', null, queryParams);
+    return httpDoGetRequest(EnumUtil.QueryNetworkType.Http, EnumUtil.QueryMethodType.Get, 'baidu.com', 'a/a', null, queryParams);
   }
 }

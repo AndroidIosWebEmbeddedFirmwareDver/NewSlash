@@ -23,7 +23,7 @@ class AutoRejectAppStateWidget extends State<AutoRejectAppWighet> {
   var rejectLogs = 'this is log:';
   var rejectItemsNow = 0;
   List widgets = [];
-  String rejectSize = '5000';
+  String rejectSize = '200';
 
   ListView getListView() => ListView.builder(
       itemCount: widgets.length,
@@ -81,8 +81,7 @@ class AutoRejectAppStateWidget extends State<AutoRejectAppWighet> {
         "Access-Control-Allow-Headers": "X-Requested-With",
         "Access-Control-Allow-Methods": "PUT,POST,GET,DELETE,OPTIONS",
         // ignore: equal_keys_in_map
-        'Access-Control-Allow-Headers':
-            'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild',
+        'Access-Control-Allow-Headers': 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild',
         // ignore: equal_keys_in_map
         "Content-Type": "application/json;charset=utf-8"
       }
@@ -108,26 +107,14 @@ class AutoRejectAppStateWidget extends State<AutoRejectAppWighet> {
     var queryParams = {
       'size': rejectSize,
       'current': '1',
-      "filter": {
-        'waybillCode': "",
-        'waybillStatus': 5,
-        'mailType': '',
-        'searchStartTime': '',
-        'searchEndTime': '',
-        'consignee': ''
-      }
+      "filter": {'waybillCode': "", 'waybillStatus': 5, 'mailType': '', 'searchStartTime': '', 'searchEndTime': '', 'consignee': ''}
     };
     HttpUtil.init()
-        .httpDoPostRequest(
-            EnumUtil.QueryNetworkType.Http,
-            EnumUtil.QueryMethodType.Post,
-            '192.168.50.18:8080',
-            '/api/service-product-inwaybill/arrival-waybill/searchWaybillByWaybillCode',
-            _generHttpPostQueryHeaders(),
-            queryParams)
+        .httpDoPostRequest(EnumUtil.QueryNetworkType.Http, EnumUtil.QueryMethodType.Post, '192.168.50.18:8080',
+            '/api/service-product-inwaybill/arrival-waybill/searchWaybillByWaybillCode', _generHttpPostQueryHeaders(), queryParams)
         .then((value) {
       //先将json字符串转json
-      Map searchWaybillByWaybillResponJSonObj = jsonDecode(value!);
+      Map searchWaybillByWaybillResponJSonObj = jsonDecode(value.responseValueStr);
       //再将json转model
       // final model = UserInfo.fromJson(json);
       var searchWaybillByWaybillRecords = searchWaybillByWaybillResponJSonObj['data']['records'];
@@ -156,7 +143,7 @@ class AutoRejectAppStateWidget extends State<AutoRejectAppWighet> {
     });
   }
 
-  static Future<String?> _deliveryInWaybill(recordObj) async {
+  static Future<HttpUtilResponse?> _deliveryInWaybill(recordObj) async {
     if (recordObj != null) {
       var queryParams = [];
       if (recordObj['smInventorySummaryList'] != null) {
@@ -228,7 +215,7 @@ class AutoRejectAppStateWidget extends State<AutoRejectAppWighet> {
       var recordObj = msg[0];
       SendPort replyTo = msg[1];
       _deliveryInWaybill(recordObj).then((value) {
-        var nowLog = '运单' + recordObj['waybillCode'] + '提货出库:回执内容->' + value!;
+        var nowLog = '运单' + recordObj['waybillCode'] + '提货出库:回执内容->' + value!.responseValueStr;
         // 其对应的“ReceivePort”发送解析出来的JSON数据③
         replyTo.send(nowLog);
       });

@@ -39,6 +39,7 @@ class SlashMainPageWidgetsState extends State<SlashMainPageWidgets> implements L
       onLoadMore: (BuildContext context, double metricsPixels, double metricsMaxScrollExtent) =>
           onLazyLoadListViewLoadMore(context, metricsPixels, metricsMaxScrollExtent),
       onRefresh: (BuildContext context) async => this.onLazyLoadListViewRefresh(context),
+      loadMode: LazyLoadListViewWidgetLoadMode.PRELOAD,
     );
   }
 
@@ -282,7 +283,7 @@ class SlashMainPageWidgetsState extends State<SlashMainPageWidgets> implements L
     // print(queryParams);
     // 初始化数据
     HttpUtil.init().httpSearchImage(mSlashSource, queryParams).then((value) {
-      if (value!.responseStatusCode == 200) {
+      if (value!.responseStatusCode == HttpUtilResponse.httpResponseTrueCode) {
         setState(() {
           mImagesDataResultOfPexelsModel.addPhotosForPage(PexelsPhotosModel.fromJson(jsonDecode(value.responseValueStr)).photosShow);
         });

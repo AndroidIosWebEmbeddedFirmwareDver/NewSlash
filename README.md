@@ -22,6 +22,7 @@ a tool for the  open source images browser and download.
 .lazy_listview 封装完成、应用
 .网络模块封装和更新
 
-## .2020121001,lazy_listview
-.浏览
-.下载
+## .2020121001
+.浏览页面:优化
+.下载页面:搭建框架
+.lazy_listview,增加加载更多数据的模式，PRELOAD-提前加载，RUNLOAD-达到加载。

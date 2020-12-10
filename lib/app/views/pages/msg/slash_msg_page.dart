@@ -26,6 +26,7 @@ class SlashMsgPageWidgetsState extends State<SlashMsgPageWidgets> implements Laz
                   BuildContext context,
                 ) async =>
                     this.onLazyLoadListViewRefresh(context),
+                loadMode: LazyLoadListViewWidgetLoadMode.RUNLOAD,
               ),
             ),
             flex: 150),
