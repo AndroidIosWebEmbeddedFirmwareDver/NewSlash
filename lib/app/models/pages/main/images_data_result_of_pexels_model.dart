@@ -40,14 +40,6 @@ class ImagesDataResultOfPexelsModel {
     return this;
   }
 
-  @deprecated
-  addPhotos(List<PexelsPhotosShowModel>? photosShow) {
-    photosShow!.forEach((element) {
-      getPhotosShows()!.add(element);
-    });
-    this.inLoading = false;
-  }
-
   removePhotos(int removeIndex) {
     getPhotosShows()!.removeAt(removeIndex);
   }
