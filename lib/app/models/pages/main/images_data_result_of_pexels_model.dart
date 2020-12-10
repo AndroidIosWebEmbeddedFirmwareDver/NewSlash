@@ -3,7 +3,7 @@ import 'package:newslash/app/models/pexels_photos_show_model.dart';
 import 'package:newslash/utils/app_system_params.dart';
 
 class ImagesDataResultOfPexelsModel {
-  int perPageSize = 10;
+  int perPageSize = 5;
   int allPageSize = 0;
   int nowPageIndex = 0;
   int queryPageIndex = 0;

@@ -282,13 +282,13 @@ class SlashMainPageWidgetsState extends State<SlashMainPageWidgets> implements L
     // print(queryParams);
     // 初始化数据
     HttpUtil.init().httpSearchImage(mSlashSource, queryParams).then((value) {
-      if (value!.contains('error')) {
+      if (value!.responseStatusCode == 200) {
         setState(() {
-          _showErrorMsg = value;
+          mImagesDataResultOfPexelsModel.addPhotosForPage(PexelsPhotosModel.fromJson(jsonDecode(value.responseValueStr)).photosShow);
         });
       } else {
         setState(() {
-          mImagesDataResultOfPexelsModel.addPhotosForPage(PexelsPhotosModel.fromJson(jsonDecode(value)).photosShow);
+          _showErrorMsg = value.responseValueStr;
         });
       }
     });
