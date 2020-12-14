@@ -1,17 +1,26 @@
 import 'dart:io';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import 'package:newslash/app/views/base/slash_base_app_widgets.dart';
-import 'package:newslash/test/autoreject/auto_reject_app.dart';
-import 'plugins/window_size/lib/window_size.dart' as window_size;
+import 'package:newslash/app/modules/base/views/slash_base_app_widgets.dart';
+import 'package:newslash/plugins/window_size/lib/window_size.dart' as window_size;
 
 void main() {
-  // initWindows();
   runApp(MaterialApp(
     // home: IsolateDemoSampleApp(),
     // home: AutoRejectApp(),
     home: SlashMainWidgets(),
+    // 国际化
+    // localizationsDelegates: [
+    //   GlobalMaterialLocalizations.delegate,
+    //   GlobalWidgetsLocalizations.delegate,
+    // ],
+    // supportedLocales: [
+    //   const Locale('zh', 'CH'),
+    //   const Locale('en', 'US'),
+    // ],
+    // locale: Locale('zh'),
   ));
+  // initWindows();
 }
 
 //  Github上google的flutter-desktop-embedding是官方的桌面支持项目,
@@ -22,6 +31,7 @@ initWindows() {
   WidgetsFlutterBinding.ensureInitialized();
   // 获取窗口信息，然后设置窗口信息
   window_size.getWindowInfo().then((window) {
+    print('Flutter application run on ${Platform.operatingSystem}');
     if (window.screen != null) {
       final screenFrame = window.screen!.visibleFrame;
       final width = math.max((screenFrame.width / 2).roundToDouble(), 800.0);

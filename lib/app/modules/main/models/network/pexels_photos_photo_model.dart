@@ -1,4 +1,4 @@
-import 'package:newslash/app/models/pexels_photos_photo_src_model.dart';
+import 'package:newslash/app/modules/main/models/network/pexels_photos_photo_src_model.dart';
 
 class PexelsPhotosPhotoModel {
   late int id;
@@ -11,8 +11,7 @@ class PexelsPhotosPhotoModel {
   late PexelsPhotosPhotoSrcModel src;
   late bool liked;
 
-  PexelsPhotosPhotoModel(this.id, this.width, this.height, this.url, this.photographer, this.photographer_url,
-      this.photographer_id, this.liked, this.src);
+  PexelsPhotosPhotoModel(this.id, this.width, this.height, this.url, this.photographer, this.photographer_url, this.photographer_id, this.liked, this.src);
   PexelsPhotosPhotoModel.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
     this.id = json['id'];

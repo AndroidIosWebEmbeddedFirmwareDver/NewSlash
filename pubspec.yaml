@@ -24,6 +24,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  # flutter_localizations:
+  #   sdk: flutter
   # https://pub.dev/packages/http/install
   http: ^0.12.2
   # The following adds the Cupertino Icons font to your application.

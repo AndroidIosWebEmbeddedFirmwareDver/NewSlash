@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:newslash/app/views/base/bottom/app_bottom_widgets_model.dart';
+import 'package:newslash/app/modules/base/views/bottom/app_bottom_widgets_model.dart';
 import 'package:newslash/utils/event_bus_util.dart';
 import 'package:newslash/utils/enum_util.dart';
 
@@ -36,13 +36,11 @@ class AppBottomWidgetsState extends State<AppBottomWidgets> {
                 ),
                 onPressed: () {
                   setState(() {
-                    AppBottomWidgetsStateModel.mShowButtons[mIconButtonType]!.isOnpressed =
-                        !AppBottomWidgetsStateModel.mShowButtons[mIconButtonType]!.isOnpressed;
+                    AppBottomWidgetsStateModel.mShowButtons[mIconButtonType]!.isOnpressed = !AppBottomWidgetsStateModel.mShowButtons[mIconButtonType]!.isOnpressed;
                   });
                   Future.delayed(Duration(milliseconds: 300)).then((value) {
                     setState(() {
-                      AppBottomWidgetsStateModel.mShowButtons[mIconButtonType]!.isOnpressed =
-                          !AppBottomWidgetsStateModel.mShowButtons[mIconButtonType]!.isOnpressed;
+                      AppBottomWidgetsStateModel.mShowButtons[mIconButtonType]!.isOnpressed = !AppBottomWidgetsStateModel.mShowButtons[mIconButtonType]!.isOnpressed;
                     });
                   });
                   onWidgetMenuButtonPressed(mIconButtonType!, context!);

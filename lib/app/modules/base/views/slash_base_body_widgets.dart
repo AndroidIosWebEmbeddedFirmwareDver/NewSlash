@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:newslash/app/views/pages/main/slash_main_page.dart';
-import 'package:newslash/app/views/pages/msg/slash_msg_page.dart';
-import 'package:newslash/app/views/pages/user/slash_user_page.dart';
+import 'package:newslash/app/modules/main/views/slash_main_page.dart';
+import 'package:newslash/app/modules/msg/views/slash_msg_page.dart';
+import 'package:newslash/app/modules/user/views/slash_user_page.dart';
 import 'package:newslash/utils/enum_util.dart';
 import 'package:newslash/utils/event_bus_util.dart';
 

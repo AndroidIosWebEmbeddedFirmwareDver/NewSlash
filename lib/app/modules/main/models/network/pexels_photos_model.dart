@@ -1,4 +1,4 @@
-import 'package:newslash/app/models/pexels_photos_show_model.dart';
+import 'package:newslash/app/modules/main/models/network/pexels_photos_show_model.dart';
 
 class PexelsPhotosModel {
   late int page;

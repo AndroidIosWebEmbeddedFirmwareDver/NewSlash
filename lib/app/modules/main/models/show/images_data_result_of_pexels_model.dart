@@ -1,5 +1,5 @@
-import 'package:newslash/app/models/pexels_photos_model.dart';
-import 'package:newslash/app/models/pexels_photos_show_model.dart';
+import 'package:newslash/app/modules/main/models/network/pexels_photos_model.dart';
+import 'package:newslash/app/modules/main/models/network/pexels_photos_show_model.dart';
 import 'package:newslash/utils/app_system_params.dart';
 
 class ImagesDataResultOfPexelsModel {
