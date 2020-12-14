@@ -29,7 +29,7 @@ class LazyLoadListViewWidget extends StatelessWidget {
   late LazyLoadListViewWidgetLoadMode _lazyLoadListViewWidgetLoadMode;
   static final Map<LazyLoadListViewWidgetLoadMode, double> _loadModeLoadpixels = {
     LazyLoadListViewWidgetLoadMode.PRELOAD: 0.00,
-    LazyLoadListViewWidgetLoadMode.RUNLOAD: 100.00,
+    LazyLoadListViewWidgetLoadMode.RUNLOAD: 200.00,
   };
 
   LazyLoadListViewWidget.builder({
