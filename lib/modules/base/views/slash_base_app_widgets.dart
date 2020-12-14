@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:newslash/app/modules/base/views/app_bottom_widgets.dart';
-import 'package:newslash/app/modules/base/views/slash_base_body_widgets.dart';
+import 'package:newslash/modules/base/views/app_bottom_widgets.dart';
+import 'package:newslash/modules/base/views/slash_base_body_widgets.dart';
 
 class SlashMainWidgets extends StatefulWidget {
   @override

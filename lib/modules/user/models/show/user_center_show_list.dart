@@ -1,4 +1,4 @@
-import 'package:newslash/app/modules/user/models/show/user_center_show_item.dart';
+import 'package:newslash/modules/user/models/show/user_center_show_item.dart';
 
 enum UserCenterListShowListKey {
   settings,

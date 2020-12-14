@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:newslash/app/modules/base/models/show/app_bottom_widgets_model.dart';
+import 'package:newslash/modules/base/models/show/app_bottom_widgets_model.dart';
 import 'package:newslash/utils/event_bus_util.dart';
 import 'package:newslash/utils/enum_util.dart';
 

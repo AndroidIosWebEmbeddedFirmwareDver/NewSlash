@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:newslash/app/modules/user/models/show/user_center_show_item.dart';
-import 'package:newslash/app/modules/user/models/show/user_center_show_list.dart';
-import 'package:newslash/app/modules/user/presenters/slash_user_presenter.dart';
+import 'package:newslash/modules/user/models/show/user_center_show_item.dart';
+import 'package:newslash/modules/user/models/show/user_center_show_list.dart';
+import 'package:newslash/modules/user/presenters/slash_user_presenter.dart';
 import 'package:newslash/plugins/lazy_load_list_view/lazy_load_list_view_widget.dart';
 import 'package:newslash/utils/toast_msg_util.dart';
 

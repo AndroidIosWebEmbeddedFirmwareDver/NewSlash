@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:newslash/app/modules/main/models/network/pexels_photos_model.dart';
-import 'package:newslash/app/modules/main/models/show/images_data_result_of_pexels_model.dart';
+import 'package:newslash/modules/main/models/network/pexels_photos_model.dart';
+import 'package:newslash/modules/main/models/show/images_data_result_of_pexels_model.dart';
 import 'package:newslash/plugins/lazy_load_list_view/lazy_load_list_view_widget.dart';
 import 'package:newslash/utils/app_system_params.dart';
 import 'package:newslash/utils/enum_util.dart';

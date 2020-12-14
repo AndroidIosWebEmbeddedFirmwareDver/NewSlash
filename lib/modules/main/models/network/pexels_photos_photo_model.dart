@@ -1,4 +1,4 @@
-import 'package:newslash/app/modules/main/models/network/pexels_photos_photo_src_model.dart';
+import 'package:newslash/modules/main/models/network/pexels_photos_photo_src_model.dart';
 
 class PexelsPhotosPhotoModel {
   late int id;
