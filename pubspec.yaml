@@ -32,6 +32,8 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
   url_launcher: ^6.0.0-nullsafety.1
+  #https://github.com/flutter/plugins/tree/master/packages/webview_flutter
+  webview_flutter: ^1.0.7
 
 
 dev_dependencies:
